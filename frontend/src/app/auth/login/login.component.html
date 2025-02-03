@@ -1,0 +1,18 @@
+<div class="max-w-sm mx-auto mt-10 p-6 bg-white rounded shadow-md">
+  <h2 class="text-xl font-bold mb-4">Login</h2>
+  <input
+    class="w-full p-2 border mb-2"
+    [(ngModel)]="username"
+    placeholder="Username"
+  />
+  <input
+    class="w-full p-2 border mb-2"
+    [(ngModel)]="password"
+    type="password"
+    placeholder="Password"
+  />
+  <button class="w-full bg-blue-500 text-white py-2 rounded" (click)="login()">
+    Login
+  </button>
+  <p *ngIf="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</p>
+</div>

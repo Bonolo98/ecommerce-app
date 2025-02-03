@@ -1,0 +1,44 @@
+<!-- admin-dashboard.component.html -->
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Admin Dashboard</h1>
+  
+    <!-- Admin Controls -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Product Management -->
+      <div class="border rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Manage Products</h2>
+        <ul class="space-y-3">
+          <li><a [routerLink]="['/admin/products']" class="text-blue-500 hover:text-blue-700">View All Products</a></li>
+          <li><a [routerLink]="['/admin/products/create']" class="text-blue-500 hover:text-blue-700">Add New Product</a></li>
+        </ul>
+      </div>
+  
+      <!-- Order Management -->
+      <div class="border rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Manage Orders</h2>
+        <ul class="space-y-3">
+          <li><a [routerLink]="['/admin/orders']" class="text-blue-500 hover:text-blue-700">View All Orders</a></li>
+        </ul>
+      </div>
+  
+      <!-- User Management (if applicable) -->
+      <div class="border rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Manage Users</h2>
+        <ul class="space-y-3">
+          <li><a [routerLink]="['/admin/users']" class="text-blue-500 hover:text-blue-700">View All Users</a></li>
+        </ul>
+      </div>
+  
+    </div>
+  
+    <!-- Product Reviews Section -->
+    <div class="mt-8">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-4">Product Reviews</h2>
+      <div class="border rounded-lg p-4 shadow-md">
+        <p class="text-sm text-gray-700">You can view and manage product reviews here.</p>
+        <a [routerLink]="['/admin/reviews']" class="text-blue-500 hover:text-blue-700">View All Reviews</a>
+      </div>
+    </div>
+  </div>
+  

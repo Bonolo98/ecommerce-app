@@ -1,0 +1,22 @@
+<app-navbar (searchQueryChange)="onSearch($event)"></app-navbar>
+
+<div class="container">
+  <h1 class="product-list-heading">Product List</h1>
+
+  <div class="product-grid">
+    <div *ngFor="let product of filteredProducts" class="product-card">
+      <img *ngIf="product.image" [src]="product.image" alt="Product Image" class="product-image" />
+      <img *ngIf="!product.image" src="https://via.placeholder.com/300x200" alt="No Image" class="product-image" />
+
+      <div class="product-details" [routerLink]="['/product', product.id]">
+        <h2 class="product-name">{{ product.name }}</h2>
+        <p class="product-description">{{ product.description || 'No description available.' }}</p>
+        <p class="product-price">{{ product.price | currency }}</p>
+
+        <button (click)="addToCart(product)" class="add-to-cart-btn">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

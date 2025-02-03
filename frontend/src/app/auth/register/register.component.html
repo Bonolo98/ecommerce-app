@@ -1,0 +1,14 @@
+<div class="max-w-sm mx-auto mt-10 p-6 bg-white rounded shadow-md">
+    <h2 class="text-xl font-bold mb-4">Register</h2>
+    <input class="w-full p-2 border mb-2" [(ngModel)]="username" placeholder="Username" />
+    <input class="w-full p-2 border mb-2" [(ngModel)]="password" type="password" placeholder="Password" />
+    <select class="w-full p-2 border mb-2" [(ngModel)]="role">
+      <option value="user">User</option>
+      <option value="admin">Admin</option>
+    </select>
+    <input class="w-full p-2 border mb-2" [(ngModel)]="email" placeholder="Email (optional)" />
+    <input class="w-full p-2 border mb-2" [(ngModel)]="phone" placeholder="Phone (optional)" />
+    <button class="w-full bg-green-500 text-white py-2 rounded" (click)="register()">Register</button>
+    <p *ngIf="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</p>
+  </div>
+  

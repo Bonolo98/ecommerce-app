@@ -1,0 +1,39 @@
+<div class="container">
+  <div *ngIf="product" class="product-card">
+    <!-- Product Image -->
+    <img 
+      *ngIf="product.image" 
+      [src]="product.image" 
+      alt="{{ product.name }}" 
+      class="product-image"
+    />
+    <img 
+      *ngIf="!product.image" 
+      src="https://via.placeholder.com/600x400" 
+      alt="No Image Available" 
+      class="product-image"
+    />
+
+    <!-- Product Details -->
+    <div class="product-details">
+      <h1 class="product-title">{{ product.name }}</h1>
+      <p class="product-description">{{ product.description || 'No description available.' }}</p>
+      <p class="product-price">{{ product.price | currency }}</p>
+
+      <!-- Add to Cart Button -->
+      <button class="add-to-cart-btn" (click)="addToCart(product)">
+        Add to Cart
+      </button>
+
+      <!-- Back to Products Link -->
+      <div class="back-link">
+        <a [routerLink]="['/products']">Back to Products</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Show if product not found -->
+  <div *ngIf="!product" class="no-product">
+    <p>Product not found.</p>
+  </div>
+</div>
