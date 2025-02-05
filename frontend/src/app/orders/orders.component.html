@@ -1,0 +1,25 @@
+<div class="p-6 bg-white shadow-lg rounded-lg">
+    <h2 class="text-xl font-semibold mb-4">My Orders</h2>
+  
+    <div *ngIf="orders.length === 0">
+      <p class="text-gray-600">No orders found.</p>
+    </div>
+  
+    <div *ngFor="let order of orders" class="border p-4 mb-4 rounded-lg">
+      <h3 class="text-lg font-semibold">Order #{{ order.id }}</h3>
+      <p class="text-gray-600">Total: ${{ order.total_amount }}</p>
+      <p class="text-gray-600">Status: {{ order.status }}</p>
+      <p class="text-gray-600">Placed on: {{ order.created_at | date }}</p>
+      <p class="text-gray-600">Shipping Address: {{ order.shipping_address }}</p>
+  
+      <div *ngFor="let item of order.items" class="flex items-center border-t py-2">
+        <img [src]="item.image_url" alt="{{ item.name }}" class="w-16 h-16 object-cover rounded">
+        <div class="ml-4">
+          <p class="text-lg font-medium">{{ item.name }}</p>
+          <p class="text-gray-600">Price: ${{ item.price }}</p>
+          <p class="text-gray-600">Quantity: {{ item.quantity }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

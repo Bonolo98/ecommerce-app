@@ -55,4 +55,4 @@ const deleteProduct = async (req, res) => {
 };
 
 
-module.exports = { createProduct, getProducts, deleteProduct, getProductById, searchProducts };
+module.exports = { createProduct, getProducts, deleteProduct, getProductById };

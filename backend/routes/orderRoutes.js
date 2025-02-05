@@ -1,10 +1,11 @@
-const express = require("express");
-const { createOrder, getOrders } = require("../controllers/orderController");
-const { authenticate } = require("../middleware/authMiddleware");
 
+
+const express = require('express');
 const router = express.Router();
+const ordersController = require('../controllers/orderController');
 
-router.post("/", authenticate(["user"]), createOrder);
-router.get("/", authenticate(["user", "admin"]), getOrders);
+router.post('/place', ordersController.placeOrder);
+router.get('/user/:userId', ordersController.getOrders);
 
 module.exports = router;
+
