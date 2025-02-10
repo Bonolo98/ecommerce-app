@@ -18,17 +18,22 @@
     <div class="product-details">
       <h1 class="product-title">{{ product.name }}</h1>
       <p class="product-description">{{ product.description || 'No description available.' }}</p>
-      <p class="product-price">{{ product.price | currency }}</p>
+      <p class="available-stock">IN STOCK: </p>
+      <p class="product-price">{{ product.price | currency: "R" }}</p>
 
       <!-- Add to Cart Button -->
       <button class="add-to-cart-btn" (click)="addToCart(product)">
         Add to Cart
       </button>
 
+      <button class="go-to-cart-btn" [routerLink]="['/cart']">
+        Go to Cart
+      </button>
+
       <!-- Back to Products Link -->
-      <div class="back-link">
+      <!-- <div class="back-link">
         <a [routerLink]="['/products']">Back to Products</a>
-      </div>
+      </div> -->
     </div>
   </div>
 
