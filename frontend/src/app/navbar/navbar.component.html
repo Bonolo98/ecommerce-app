@@ -1,8 +1,6 @@
 <nav class="navbar">
-  <!-- Logo redirects to Product List -->
-  <a routerLink="/product-list" class="logo">MyStore</a>
+  <a routerLink="/" class="logo">MyStore</a>
 
-  <!-- Search Bar -->
   <div class="search-container">
     <input
       type="text"
@@ -17,7 +15,6 @@
     </a>
   </div>
 
-  <!-- Navigation Links -->
   <div class="nav-links">
     <a routerLink="/wishlist" class="wishlist-link">
       <img width="30" height="30" src="https://img.icons8.com/forma-regular/96/FFFFFF/like.png" alt="like"/>
@@ -26,7 +23,8 @@
       <img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/FFFFFF/shopping-cart--v1.png" alt="shopping-cart"/>
     </a>
 
-    <!-- My Account Dropdown -->
+    <span class="login-text"  *ngIf="username">{{ username }}</span>
+
     <div class="dropdown">
       <button class="dropbtn">
         <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/FFFFFF/user.png" alt="user"/>

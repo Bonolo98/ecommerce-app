@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -30,6 +30,28 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('token');
   }
+
+  getUsername(): any {
+    const token = this.getToken(); // Retrieve token from localStorage
+    if (!token) return null;
+  
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+      console.log('Decoded JWT:', payload); // Debugging
+      return payload.username || null;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
+  
+  
+
+  getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  }
+
 
   getUserRole(): string {
     const token = this.getToken();

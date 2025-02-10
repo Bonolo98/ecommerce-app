@@ -22,23 +22,6 @@ export class LoginComponent {
     private cartService: CartService
   ) {}
 
-  // login() {
-  //   this.authService.login({ username: this.username, password: this.password }).subscribe(
-  //     (response) => {
-  //       localStorage.setItem('token', response.token);
-  //       const role = this.authService.getUserRole();
-  //       if (role === 'admin') {
-  //         this.router.navigate(['/admin']);
-  //       } else {
-  //         this.router.navigate(['/']);
-  //       }
-  //     },
-  //     (error) => {
-  //       this.errorMessage = 'Invalid credentials';
-  //     }
-  //   );
-  // }
-
   login() {
     this.authService
       .login({ username: this.username, password: this.password })

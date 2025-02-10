@@ -88,3 +88,8 @@
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
+.login-text {
+  color: white;
+  font-weight: bold;
+}

@@ -23,7 +23,7 @@ import { SearchService } from '../services/search.service';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
@@ -31,27 +31,37 @@ import { SearchService } from '../services/search.service';
 export class NavbarComponent {
   searchQuery: string = '';
   menuOpen: boolean = false;
+  username!: string;
 
   authService = inject(AuthService);
   searchService = inject(SearchService);
 
   @Output() searchQueryChange = new EventEmitter<string>();
 
+  isLoggedIn = false;
+
+  ngOnInit() {
+    this.loadUsername(); // Load username on init
+  }
+
+  loadUsername() {
+    this.username = this.authService.getUsername();
+    console.log('Navbar Username:', this.username); // Debugging
+  }
 
   onSearchChange() {
     this.searchService.updateSearch(this.searchQuery);
   }
-
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
 
   goToProfile() {
-    console.log("Navigating to profile...");
+    console.log('Navigating to profile...');
   }
-  
-  logout(){
+
+  logout() {
     this.authService.logout();
   }
 }
