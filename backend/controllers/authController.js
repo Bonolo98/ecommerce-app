@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const pool = require("../db");
+const asyncHandler = require('express-async-handler');
+const User = require('../model/userModel'); // Import your User model
 
 const register = async (req, res) => {
   const { username, password, role, email, phone } = req.body;
@@ -42,4 +44,26 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+
+const getUserProfile = asyncHandler(async (req, res) => {
+  try {
+      const user = await User.findById(req.user.id); // Fetch user details using the ID from JWT
+
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json({
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role
+      });
+  } catch (err) {
+      res.status(500).json({ message: "Error fetching user profile", error: err.message });
+  }
+});
+
+
+module.exports = { register, login, getUserProfile };
+

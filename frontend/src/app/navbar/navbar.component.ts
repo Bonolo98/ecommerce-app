@@ -37,6 +37,7 @@ export class NavbarComponent {
 
   @Output() searchQueryChange = new EventEmitter<string>();
 
+
   onSearchChange() {
     this.searchService.updateSearch(this.searchQuery);
   }

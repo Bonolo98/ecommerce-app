@@ -23,8 +23,18 @@
       <img width="30" height="30" src="https://img.icons8.com/forma-regular/96/FFFFFF/like.png" alt="like"/>
     </a>
     <a routerLink="/cart" class="cart-link">
-      <img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/FFFFFF/shopping-cart--v1.png" alt="shopping-cart--v1"/>
+      <img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/FFFFFF/shopping-cart--v1.png" alt="shopping-cart"/>
     </a>
+
+    <!-- My Account Dropdown -->
+    <div class="dropdown">
+      <button class="dropbtn">
+        <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/FFFFFF/user.png" alt="user"/>
+      </button>
+      <div class="dropdown-content">
+        <a routerLink="/profile">Profile</a>
+        <a (click)="logout()">Logout</a>
+      </div>
+    </div>
   </div>
 </nav>
-
