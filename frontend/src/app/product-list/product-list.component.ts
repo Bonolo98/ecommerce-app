@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Product } from '../models/product.model';
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'app-product-list',
@@ -21,7 +22,6 @@ import { Product } from '../models/product.model';
     MatIconModule,
     MatCardModule,
     MatGridListModule,
-    NavbarComponent,
   ],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
@@ -35,38 +35,33 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private authService: AuthService
+    private authService: AuthService,
+    private searchService: SearchService
   ) {}
 
-  ngOnInit(): void {
-    this.fetchProducts();
-  }
+  ngOnInit() {
+    this.loadProducts();
 
-  fetchProducts(): void {
-    this.productService.getProducts().subscribe((data: any) => {
-      this.products = data;
-      this.filteredProducts = data;
+    // Listen for search updates
+    this.searchService.searchQuery$.subscribe((query) => {
+      this.filterProducts(query);
     });
   }
 
-  addToCart(product: any): void {
-    const token = this.authService.getToken();
-    const userId = token ? JSON.parse(atob(token.split('.')[1])).id : null;
-    this.cartService.addToCart(userId, product.id);
-    alert(`${product.name} added to cart!`);
+  loadProducts() {
+    this.productService.getProducts().subscribe((data: any) => {
+      this.products = data;
+      this.filteredProducts = data; // Show all initially
+    });
   }
 
-  filterProducts(searchTerm: string): void {
-    this.searchQuery = searchTerm;
+  filterProducts(query: string) {
+    if (!query) {
+      this.filteredProducts = this.products;
+      return;
+    }
     this.filteredProducts = this.products.filter((product) =>
-      product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
-  }
-
-  onSearch(query: string): void {
-    this.searchQuery = query;
-    this.filteredProducts = this.products.filter((product) =>
-      product.name && product.name.includes(this.searchQuery)
+      product.name.toLowerCase().includes(query.toLowerCase())
     );
   }
   

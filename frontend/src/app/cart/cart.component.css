@@ -1,8 +1,120 @@
-button {
-    transition: all 0.2s ease-in-out;
-  }
-  
-  button:hover {
-    transform: scale(1.05);
-  }
-  
+/* General Styles */
+.checkout-container,
+.cart-container {
+    padding: 24px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+}
+
+h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.empty-message {
+    color: #6b7280;
+}
+
+/* Item Styles */
+.checkout-item,
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding: 12px 0;
+}
+
+.item-image {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.item-details {
+    flex: 1;
+    margin-left: 16px;
+}
+
+.item-details h3 {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.item-details p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* Total Price */
+.total {
+    margin-top: 16px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Form Styles */
+.form-group {
+    margin-top: 16px;
+}
+
+.form-group label {
+    font-size: 16px;
+    font-weight: 500;
+    display: block;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+/* Buttons */
+.actions,
+.cart-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.primary-button,
+.secondary-button,
+.remove-button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+}
+
+.primary-button {
+    background: #3b82f6;
+}
+
+.primary-button:hover {
+    background: #2563eb;
+}
+
+.secondary-button {
+    background: #374151;
+}
+
+.secondary-button:hover {
+    background: #1f2937;
+}
+
+.remove-button {
+    background: #ef4444;
+}
+
+.remove-button:hover {
+    background: #dc2626;
+}

@@ -1,7 +1,6 @@
-<mat-toolbar color="primary">
+<!-- <mat-toolbar color="primary">
   <a routerLink="/" class="logo">MyStore</a>
 
-  <!-- Search Bar -->
   <mat-form-field appearance="outline" class="search-box">
     <input 
       matInput 
@@ -21,4 +20,53 @@
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>account_circle</mat-icon>
   </button>
-</mat-toolbar>
+</mat-toolbar> -->
+
+<!-- 
+<nav class="navbar">
+  <a routerLink="/" class="logo">MyStore</a>
+
+  <div class="search-container">
+    <input
+      type="text"
+      placeholder="Search products..."
+      [(ngModel)]="searchQuery"
+      (input)="onSearchChange(searchQuery)" />
+  </div>
+
+  <div class="nav-links">
+    <a routerLink="/">Home</a>
+    <a routerLink="/cart">Cart</a>
+
+    <div class="dropdown">
+      <button class="profile-button" (click)="toggleMenu()">
+        <span class="icon">👤</span>
+      </button>
+      <div class="dropdown-menu" [class.show]="menuOpen">
+        <button (click)="goToProfile()">Profile</button>
+        <button (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+ -->
+
+
+ <nav class="navbar">
+  <a routerLink="/" class="logo">MyStore</a>
+
+  <!-- Search Bar -->
+  <div class="search-container">
+    <input
+      type="text"
+      placeholder="Search products..."
+      [(ngModel)]="searchQuery"
+      (input)="onSearchChange()" />
+  </div>
+
+  <div class="nav-links">
+    <a routerLink="/">Home</a>
+    <a routerLink="/cart">Cart</a>
+  </div>
+</nav>
+

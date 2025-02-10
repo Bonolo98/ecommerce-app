@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'app-navbar',
@@ -28,11 +30,27 @@ import { FormsModule } from '@angular/forms';
 })
 export class NavbarComponent {
   searchQuery: string = '';
+  menuOpen: boolean = false;
+
+  authService = inject(AuthService);
+  searchService = inject(SearchService);
 
   @Output() searchQueryChange = new EventEmitter<string>();
 
-  onSearchChange(value: string) {
-    this.searchQuery = value;
-    this.searchQueryChange.emit(this.searchQuery);
+  onSearchChange() {
+    this.searchService.updateSearch(this.searchQuery);
+  }
+
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  goToProfile() {
+    console.log("Navigating to profile...");
+  }
+  
+  logout(){
+    this.authService.logout();
   }
 }
