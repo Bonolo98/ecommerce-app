@@ -1,33 +1,179 @@
-<div class="checkout-container">
+<div class="container-cards">
+  <!-- <div class="checkout-container">
     <h2>Checkout</h2>
 
     <div *ngIf="cartItems.length === 0">
-        <p class="empty-message">Your cart is empty.</p>
+      <p class="empty-message">Your cart is empty.</p>
     </div>
 
     <div *ngFor="let item of cartItems" class="checkout-item">
-        <img [src]="item.image" alt="{{ item.name }}" class="item-image" />
-        <div class="item-details">
-            <h3>{{ item.name }}</h3>
-            <p>Price: ${{ item.price }}</p>
-            <p>Quantity: {{ item.quantity }}</p>
-        </div>
+      <img [src]="item.image" alt="{{ item.name }}" class="item-image" />
+      <div class="item-details">
+        <h3>{{ item.name }}</h3>
+        <p>Price: ${{ item.price }}</p>
+        <p>Quantity: {{ item.quantity }}</p>
+      </div>
     </div>
 
     <div class="total">
-        <h3>Total: ${{ totalAmount }}</h3>
+      <h3>Total: ${{ totalAmount }}</h3>
     </div>
 
     <div class="form-group">
+      <label for="address">Names:</label>
+      <input
+        type="text"
+        id="address"
+        [(ngModel)]="shippingAddress"
+        placeholder="Enter your shipping address"
+      />
+    </div>
+
+    <div class="form-group">
+        <label for="address">Phone Number:</label>
+        <input
+          type="text"
+          id="address"
+          [(ngModel)]="shippingAddress"
+          placeholder="Enter your shipping address"
+        />
+      </div>
+
+
+      <div class="form-group">
         <label for="address">Shipping Address:</label>
-        <input type="text" id="address" [(ngModel)]="shippingAddress" placeholder="Enter your shipping address">
+        <input
+          type="text"
+          id="address"
+          [(ngModel)]="shippingAddress"
+          placeholder="Enter your shipping address"
+        />
+      </div>
+
+    <div class="actions">
+      <button (click)="placeOrder()" class="primary-button">Place Order</button>
     </div>
 
     <div class="actions">
+      <button routerLink="/orders" class="primary-button">View Orders</button>
+    </div>
+  </div> -->
+
+  <div class="checkout-container">
+    <h2>Checkout</h2>
+  
+    <!-- Tabs Navigation -->
+    <div class="tabs">
+      <button [class.active]="currentTab === 'details'" (click)="switchTab('details')">
+        1. Shipping Details
+      </button>
+      <button [class.active]="currentTab === 'payment'" (click)="switchTab('payment')" [disabled]="!shippingCompleted">
+        2. Payment Details
+      </button>
+    </div>
+  
+    <!-- Tab Content: Shipping Details -->
+    <div *ngIf="currentTab === 'details'">
+      <div *ngIf="cartItems.length === 0">
+        <p class="empty-message">Your cart is empty.</p>
+      </div>
+  
+      <div *ngFor="let item of cartItems" class="checkout-item">
+        <img [src]="item.image" alt="{{ item.name }}" class="item-image" />
+        <div class="item-details">
+          <h3>{{ item.name }}</h3>
+          <p>Price: ${{ item.price }}</p>
+          <p>Quantity: {{ item.quantity }}</p>
+        </div>
+      </div>
+  
+      <div class="total">
+        <h3>Total: ${{ totalAmount }}</h3>
+      </div>
+  
+      <div class="form-group">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" [(ngModel)]="fullName" placeholder="Enter your full name" />
+      </div>
+  
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" [(ngModel)]="phoneNumber" placeholder="Enter your phone number" />
+      </div>
+  
+      <div class="form-group">
+        <label for="address">Shipping Address:</label>
+        <input type="text" id="address" [(ngModel)]="shippingAddress" placeholder="Enter your shipping address" />
+      </div>
+  
+      <div class="actions">
+        <button (click)="nextTab()" class="primary-button">Next: Payment</button>
+      </div>
+    </div>
+  
+    <!-- Tab Content: Payment Details -->
+    <div *ngIf="currentTab === 'payment'">
+      <h3>Payment Details</h3>
+  
+      <div class="form-group">
+        <label for="cardNumber">Card Number:</label>
+        <input type="text" id="cardNumber" [(ngModel)]="paymentDetails.cardNumber" placeholder="Enter card number" />
+      </div>
+  
+      <div class="form-group">
+        <label for="expiryDate">Expiry Date:</label>
+        <input type="text" id="expiryDate" [(ngModel)]="paymentDetails.expiryDate" placeholder="MM/YY" />
+      </div>
+  
+      <div class="form-group">
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" [(ngModel)]="paymentDetails.cvv" placeholder="Enter CVV" />
+      </div>
+  
+      <div class="actions">
         <button (click)="placeOrder()" class="primary-button">Place Order</button>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  <div class="checkout-container">
+    <h2>Checkout</h2>
+
+    <div *ngIf="cartItems.length === 0">
+      <p class="empty-message">Your cart is empty.</p>
+    </div>
+
+    <div *ngFor="let item of cartItems" class="checkout-item">
+      <img [src]="item.image" alt="{{ item.name }}" class="item-image" />
+      <div class="item-details">
+        <h3>{{ item.name }}</h3>
+        <p>Price: ${{ item.price }}</p>
+        <p>Quantity: {{ item.quantity }}</p>
+      </div>
+    </div>
+
+    <div class="total">
+      <h3>Total: ${{ totalAmount }}</h3>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Shipping Address:</label>
+      <input
+        type="text"
+        id="address"
+        [(ngModel)]="shippingAddress"
+        placeholder="Enter your shipping address"
+      />
     </div>
 
     <div class="actions">
-        <button routerLink="/orders" class="primary-button">View Orders</button>
+      <button (click)="placeOrder()" class="primary-button">Place Order</button>
     </div>
+
+    <div class="actions">
+      <button routerLink="/orders" class="primary-button">View Orders</button>
+    </div>
+  </div>
 </div>

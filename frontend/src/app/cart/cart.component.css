@@ -1,4 +1,9 @@
 /* General Styles */
+.container {
+    height: 100vh;
+}
+
+
 .checkout-container,
 .cart-container {
     padding: 24px;
@@ -7,6 +12,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 600px;
     margin: auto;
+    min-height: 20vh;
 }
 
 h2 {
@@ -96,25 +102,26 @@ h2 {
 }
 
 .primary-button {
-    background: #3b82f6;
+    background: #FF8966;
 }
 
 .primary-button:hover {
-    background: #2563eb;
+    background: #FF8966;
 }
 
 .secondary-button {
-    background: #374151;
+    background: #FF8966;
+    margin-right: 10px;
 }
 
 .secondary-button:hover {
-    background: #1f2937;
+    background: #FF8966;
 }
 
 .remove-button {
-    background: #ef4444;
+    /* background: #ef4444; */
 }
 
 .remove-button:hover {
-    background: #dc2626;
+    /* background: #dc2626; */
 }

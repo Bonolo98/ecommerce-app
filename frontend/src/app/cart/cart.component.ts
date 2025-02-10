@@ -122,7 +122,11 @@ export class CartComponent implements OnInit {
   userId: number | null = null;
   totalAmount: number = 0;
 
-  constructor(private cartService: CartService, private authService: AuthService, private router: Router) {}
+  constructor(
+    private cartService: CartService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.setUserId();
@@ -154,7 +158,10 @@ export class CartComponent implements OnInit {
   }
 
   calculateTotal() {
-    this.totalAmount = this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    this.totalAmount = this.cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
   }
 
   removeFromCart(productId: number) {
@@ -190,4 +197,3 @@ export class CartComponent implements OnInit {
     }
   }
 }
-

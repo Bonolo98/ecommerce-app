@@ -1,42 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../services/auth.service';
-import { CommonModule, DatePipe } from '@angular/common';
 import { OrderService } from '../services/order.service';
+import { AuthService } from '../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 interface OrderItem {
-  productId: number;
+  id: number;
   name: string;
   price: number;
+  image: string;
   quantity: number;
-  image_url: string;
 }
 
 interface Order {
   id: number;
-  total_amount: number;
+  totalAmount: number;
+  shippingAddress: string;
   status: string;
-  created_at: string;
-  shipping_address: string;
   items: OrderItem[];
 }
 
 @Component({
   selector: 'app-orders',
-  imports: [DatePipe, CommonModule],
+  imports: [CommonModule],
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
-  standalone: true,
 })
 export class OrdersComponent implements OnInit {
   orders: Order[] = [];
   userId: number | null = null;
+  expandedOrderId: number | null = null; // For toggling order details
 
-  constructor(private http: HttpClient, private authService: AuthService, private orderService: OrderService) {}
+  constructor(private orderService: OrderService, private authService: AuthService) {}
 
   ngOnInit() {
     this.setUserId();
-    this.loadOrders();
+    this.fetchOrders();
   }
 
   setUserId() {
@@ -46,9 +44,29 @@ export class OrdersComponent implements OnInit {
     }
   }
 
-  loadOrders() {
+  fetchOrders() {
     if (this.userId) {
-      this.orderService.getOrders(this.userId);
+      this.orderService.getOrdersByUser(this.userId).subscribe(
+        (data: any) => {
+          this.orders = data.orders;
+        },
+        (error) => {
+          console.error('Error fetching orders:', error);
+        }
+      );
+    }
+  }
+
+  toggleOrderDetails(orderId: number) {
+    this.expandedOrderId = this.expandedOrderId === orderId ? null : orderId;
+  }
+
+  getStatusClass(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'pending': return 'pending';
+      case 'completed': return 'completed';
+      case 'cancelled': return 'cancelled';
+      default: return '';
     }
   }
 }
