@@ -44,8 +44,20 @@ export class AuthService {
       return null;
     }
   }
+
+  getUserId(): any {
+    const token = this.getToken(); // Retrieve token from localStorage
+    if (!token) return null;
   
-  
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+      console.log('Decoded JWT:', payload); // Debugging
+      return payload.id || null;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
 
   getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');

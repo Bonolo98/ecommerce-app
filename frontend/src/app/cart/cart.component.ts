@@ -96,6 +96,10 @@
 //   }
 // }
 
+
+
+
+
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
@@ -122,15 +126,21 @@ export class CartComponent implements OnInit {
   userId: number | null = null;
   totalAmount: number = 0;
 
-  constructor(
-    private cartService: CartService,
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private cartService: CartService, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.setUserId();
-    this.loadCart();
+    this.cartService.cart$.subscribe((cart) => {
+      this.cartItems = cart;
+      this.calculateTotal();
+    });
+  
+    if (this.userId) {
+      this.cartService.refreshCart(this.userId); // Load cart from database
+    } else {
+      this.cartItems = this.cartService.getCartFromLocalStorage();
+      this.calculateTotal();
+    }
   }
 
   setUserId() {
@@ -158,10 +168,7 @@ export class CartComponent implements OnInit {
   }
 
   calculateTotal() {
-    this.totalAmount = this.cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
+    this.totalAmount = this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   }
 
   removeFromCart(productId: number) {
@@ -197,3 +204,4 @@ export class CartComponent implements OnInit {
     }
   }
 }
+
