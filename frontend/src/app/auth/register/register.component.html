@@ -1,14 +1,15 @@
-<div class="max-w-sm mx-auto mt-10 p-6 bg-white rounded shadow-md">
-    <h2 class="text-xl font-bold mb-4">Register</h2>
-    <input class="w-full p-2 border mb-2" [(ngModel)]="username" placeholder="Username" />
-    <input class="w-full p-2 border mb-2" [(ngModel)]="password" type="password" placeholder="Password" />
-    <select class="w-full p-2 border mb-2" [(ngModel)]="role">
+<div class="container">
+  <h2 class="header-text">LOGO HERE</h2>
+  <h2 class="header-text">Register</h2>
+  <input class="input-field" [(ngModel)]="username" placeholder="Username" />
+  <input class="input-field" [(ngModel)]="password" type="password" placeholder="Password" />
+  <select class="option-field" [(ngModel)]="role">
       <option value="user">User</option>
       <option value="admin">Admin</option>
-    </select>
-    <input class="w-full p-2 border mb-2" [(ngModel)]="email" placeholder="Email (optional)" />
-    <input class="w-full p-2 border mb-2" [(ngModel)]="phone" placeholder="Phone (optional)" />
-    <button class="w-full bg-green-500 text-white py-2 rounded" (click)="register()">Register</button>
-    <p *ngIf="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</p>
-  </div>
-  
+  </select>
+  <input class="input-field" [(ngModel)]="email" placeholder="Email (optional)" />
+  <input class="input-field" [(ngModel)]="phone" placeholder="Phone (optional)" />
+  <button class="register-button" (click)="register()">Register</button>
+  <p class="header-text">Already have an account? <a routerLink="/login" style="color: #FF8966;">Login</a></p>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+</div>

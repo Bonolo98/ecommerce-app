@@ -1,0 +1,61 @@
+.container {
+
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    text-align: center;
+}
+
+.header-text {
+    color: #FF8966;
+
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #FF8966;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.option-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #FF8966;
+    background-color: #FF8966;
+    border-radius: 4px;
+    font-size: 16px;
+    color: white;
+
+}
+
+.register-button {
+    width: 100%;
+    background: #FF8966;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.register-button:hover {
+    background: #aa553c;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+}
