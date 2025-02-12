@@ -56,46 +56,6 @@ exports.addToCart = async (req, res) => {
   }
 };
 
-
-// exports.addToCart = async (req, res) => {
-//   try {
-//     const { userId, cartItems } = req.body;
-
-//     if (!userId || !cartItems || !Array.isArray(cartItems)) {
-//       return res.status(400).json({ success: false, message: "Invalid request data" });
-//     }
-
-//     for (const item of cartItems) {
-//       const { productId, quantity } = item;
-
-//       // Check if the product is already in the user's cart
-//       const existingItem = await pool.query(
-//         "SELECT * FROM cart WHERE user_id = $1 AND product_id = $2",
-//         [userId, productId]
-//       );
-
-//       if (existingItem.rows.length > 0) {
-//         // If exists, update quantity
-//         await pool.query(
-//           "UPDATE cart SET quantity = quantity + $1 WHERE user_id = $2 AND product_id = $3",
-//           [quantity, userId, productId]
-//         );
-//       } else {
-//         // If not, insert new item
-//         await pool.query(
-//           "INSERT INTO cart (user_id, product_id, quantity) VALUES ($1, $2, $3)",
-//           [userId, productId, quantity]
-//         );
-//       }
-//     }
-
-//     res.json({ success: true, message: "Cart synced successfully" });
-//   } catch (error) {
-//     console.error("Error syncing cart:", error);
-//     res.status(500).json({ success: false, message: "Server error" });
-//   }
-// };
-
 exports.removeFromCart = async (req, res) => {
   try {
     const { userId, productId } = req.body;

@@ -55,17 +55,17 @@ const pool = require('../db'); // Adjust path as needed
 
 exports.placeOrder = async (req, res) => {
   try {
-    const { userId, items, totalAmount, shippingAddress } = req.body;
+    const { userId, items, totalAmount, shippingAddress, phoneNumber } = req.body;
 
-    if (!userId || !items || items.length === 0 || !totalAmount || !shippingAddress) {
+    if (!userId || !items || items.length === 0 || !totalAmount || !shippingAddress || !phoneNumber) {
       return res.status(400).json({ success: false, message: "Invalid request data" });
     }
 
     // Create a new order
     const orderResult = await pool.query(
-      `INSERT INTO orders (user_id, total_amount, shipping_address, status, created_at) 
-       VALUES ($1, $2, $3, 'Pending', NOW()) RETURNING id`,
-      [userId, totalAmount, shippingAddress]
+      `INSERT INTO orders (user_id, total_amount, phone_number, shipping_address, status, created_at) 
+       VALUES ($1, $2, $3, $4 'Pending', NOW()) RETURNING id`,
+      [userId, totalAmount, shippingAddress, phoneNumber]
     );
 
     const orderId = orderResult.rows[0].id;
