@@ -69,15 +69,29 @@ export class CartService {
     localStorage.removeItem('cart');
   }
 
-    removeFromCart(userId: number, productId: number): Observable<any> | void {
+  //   removeFromCart(userId: number, productId: number): Observable<any> | void {
+  //   if (userId) {
+  //     return this.http.delete<any>(`${this.apiUrl}/`, { userId, productId });
+  //   } else {
+  //     let cart = this.getCartFromLocalStorage();
+  //     cart = cart.filter((item: any) => item.id !== productId);
+  //     this.saveCartToLocalStorage(cart);
+  //   }
+  // }
+
+  removeFromCart(userId: number | null, productId: number): Observable<any> | void {
     if (userId) {
-      return this.http.post(`${this.apiUrl}/${userId}`, { userId, productId });
+      return this.http.delete(`${this.apiUrl}/${userId}`, {
+        body: { productId }, // Pass productId inside "body"
+      });
     } else {
       let cart = this.getCartFromLocalStorage();
       cart = cart.filter((item: any) => item.id !== productId);
       this.saveCartToLocalStorage(cart);
+      return; // Explicitly return void
     }
   }
+  
 
   syncLocalCartToDatabase(userId: string, cartItems: any[]) {
   this.http.post(`${this.apiUrl}/add`, { userId, items: cartItems }).subscribe(

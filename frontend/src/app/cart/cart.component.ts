@@ -174,10 +174,10 @@ export class CartComponent implements OnInit {
         this.loadCart();
       });
     } 
-    // else {
-    //   this.cartService.removeFromCart(null, productId);
-    //   this.loadCart();
-    // }
+    else {
+      this.cartService.removeFromCart(null, productId);
+      this.loadCart();
+    }
   }
 
   clearCart() {

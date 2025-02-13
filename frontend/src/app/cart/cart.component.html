@@ -10,7 +10,7 @@
             <img [src]="item.image" alt="{{ item.name }}" class="item-image" />
             <div class="item-details">
                 <h3>{{ item.name }}</h3>
-                <p>Price: R{{ item.price }}</p>
+                <p>Price: R{{ item.price * item.quantity }}</p>
                 <p>Quantity: {{ item.quantity }}</p>
             </div>
             <a (click)="removeFromCart(item.id)" class="remove-button">
