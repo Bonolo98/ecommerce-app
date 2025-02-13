@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PaystackService } from '../services/paystack.service';
 
 interface CartItem {
   id: number;
@@ -25,8 +26,9 @@ export class CheckoutComponent implements OnInit {
   cartItems: CartItem[] = [];
   userId: number | null = null;
   totalAmount: number = 0;
+  email: string = ''; // Fetch from user
 
-  fullName: string = '';
+  // fullName: string = '';
   phoneNumber: string = '';
   shippingAddress: string = '';
 
@@ -43,7 +45,8 @@ export class CheckoutComponent implements OnInit {
     private cartService: CartService,
     private orderService: OrderService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private paystackService: PaystackService,
   ) {}
 
   ngOnInit() {
@@ -84,7 +87,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   nextTab() {
-    if (!this.fullName || !this.phoneNumber || !this.shippingAddress) {
+    if (!this.phoneNumber || !this.shippingAddress) {
       alert('Please fill in all shipping details before proceeding.');
       return;
     }
@@ -112,12 +115,63 @@ export class CheckoutComponent implements OnInit {
       paymentDetails: this.paymentDetails
     };
 
+    //    this.paystackService.payWithPaystack(
+    //   this.email,
+    //   this.totalAmount,
+    //   (response) => {
+    //     console.log('Payment successful:', response);
+    //     this.saveOrder(response.reference);
+    //   },
+    //   () => {
+    //     console.log('Payment window closed');
+    //   }
+    // );
+
     this.orderService.placeOrder(orderData).subscribe(
       () => {
         alert('Order placed successfully!');
         this.cartService.clearCart(this.userId)?.subscribe(() => {
           this.router.navigate(['/orders']);
         });
+      },
+      (error) => {
+        console.error('Error placing order:', error);
+      }
+    );
+  }
+
+  // placeOrder() {
+  //   if (!this.userId || !this.email) {
+  //     alert('Please log in to proceed.');
+  //     this.router.navigate(['/login']);
+  //     return;
+  //   }
+
+  //   this.paystackService.payWithPaystack(
+  //     this.email,
+  //     this.totalAmount,
+  //     (response) => {
+  //       console.log('Payment successful:', response);
+  //       this.saveOrder(response.reference);
+  //     },
+  //     () => {
+  //       console.log('Payment window closed');
+  //     }
+  //   );
+  // }
+
+  saveOrder(transactionRef: string) {
+    const orderData = {
+      userId: this.userId,
+      cartItems: this.cartItems,
+      totalAmount: this.totalAmount,
+      transactionRef
+    };
+
+    this.orderService.placeOrder(orderData).subscribe(
+      () => {
+        alert('Order placed successfully!');
+        this.router.navigate(['/orders']);
       },
       (error) => {
         console.error('Error placing order:', error);

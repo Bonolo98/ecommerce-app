@@ -2,7 +2,7 @@ const pool = require("../db"); // Assuming you have a db connection file
 
 exports.getAllCartItems = async (req, res) => {
   try {
-    const { userId } = req.params;  // Assuming the userId is passed as a parameter
+    const { userId } = req.params; // Assuming the userId is passed as a parameter
 
     // Fetch all cart items for the user
     const cartItems = await pool.query(
@@ -14,7 +14,9 @@ exports.getAllCartItems = async (req, res) => {
     );
 
     if (cartItems.rows.length === 0) {
-      return res.status(204).json({ success: false, message: "No items in the cart" });
+      return res
+        .status(204)
+        .json({ success: false, message: "No items in the cart" });
     }
 
     res.json({ success: true, cart: cartItems.rows });
@@ -65,6 +67,14 @@ exports.removeFromCart = async (req, res) => {
       "SELECT * FROM cart WHERE user_id = $1 AND product_id = $2",
       [userId, productId]
     );
+
+    // const existingItem = await pool.query(
+    //   `SELECT c.id, c.quantity, p.name, p.price, p.image
+    //          FROM cart c
+    //          JOIN products p ON c.product_id = p.id
+    //          WHERE c.user_id = $1`,
+    //   [userId, productId]
+    // );
 
     if (existingItem.rows.length === 0) {
       return res

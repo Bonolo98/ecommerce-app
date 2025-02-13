@@ -69,9 +69,9 @@ export class CartService {
     localStorage.removeItem('cart');
   }
 
-    removeFromCart(userId: number | null, productId: number): Observable<any> | void {
+    removeFromCart(userId: number, productId: number): Observable<any> | void {
     if (userId) {
-      return this.http.post(`${this.apiUrl}/remove`, { userId, productId });
+      return this.http.post(`${this.apiUrl}/${userId}`, { userId, productId });
     } else {
       let cart = this.getCartFromLocalStorage();
       cart = cart.filter((item: any) => item.id !== productId);

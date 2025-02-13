@@ -97,9 +97,6 @@
 // }
 
 
-
-
-
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
@@ -176,10 +173,11 @@ export class CartComponent implements OnInit {
       this.cartService.removeFromCart(this.userId, productId)?.subscribe(() => {
         this.loadCart();
       });
-    } else {
-      this.cartService.removeFromCart(null, productId);
-      this.loadCart();
-    }
+    } 
+    // else {
+    //   this.cartService.removeFromCart(null, productId);
+    //   this.loadCart();
+    // }
   }
 
   clearCart() {
