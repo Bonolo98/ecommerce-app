@@ -59,3 +59,11 @@ h2 {
     margin-top: 10px;
     font-size: 14px;
 }
+
+.logo {
+    margin: auto;
+    font-size: 22px;
+    font-weight: bold;
+    color: #FF8966;
+    text-decoration: none;
+  }

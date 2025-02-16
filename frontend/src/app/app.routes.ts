@@ -9,7 +9,6 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { OrdersComponent } from './orders/orders.component';
-import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 
 export const routes: Routes = [
     { path: '', component: ProductListComponent },
@@ -19,6 +18,5 @@ export const routes: Routes = [
     { path: 'cart', component: CartComponent},
     { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
     { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
-    { path: 'admin', component: AdminDashboardComponent, canActivate: [AdminGuard] },
-    { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AdminGuard] },
+    // { path: 'admin', component: AdminDashboardComponent, canActivate: [AdminGuard] },
   ];

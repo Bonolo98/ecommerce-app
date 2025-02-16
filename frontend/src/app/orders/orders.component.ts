@@ -3,7 +3,8 @@ import { OrderService } from '../services/order.service';
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 
-interface OrderItem {
+export interface OrderItem {
+image_url: string;
   id: number;
   name: string;
   price: number;
@@ -11,12 +12,12 @@ interface OrderItem {
   quantity: number;
 }
 
-interface Order {
+export interface Order {
   id: number;
   totalAmount: number;
   shippingAddress: string;
   status: string;
-  items: OrderItem[];
+  cartItems: OrderItem[];
 }
 
 @Component({
@@ -35,6 +36,7 @@ export class OrdersComponent implements OnInit {
   ngOnInit() {
     this.setUserId();
     this.fetchOrders();
+    console.log(this.fetchOrders())
   }
 
   setUserId() {
@@ -44,18 +46,37 @@ export class OrdersComponent implements OnInit {
     }
   }
 
+  // fetchOrders() {
+  //   if (this.userId) {
+  //     this.orderService.getOrdersByUser(this.userId).subscribe(
+  //       (data: any) => {
+  //         this.orders = data.orders || [];
+  //         console.log(this.orders);
+  //       },
+  //       (error) => {
+  //         console.error('Error fetching orders:', error);
+  //         this.orders = [];
+  //       }
+  //     );
+  //   }
+  // }
+
   fetchOrders() {
-    if (this.userId) {
-      this.orderService.getOrdersByUser(this.userId).subscribe(
-        (data: any) => {
-          this.orders = data.orders;
-        },
-        (error) => {
-          console.error('Error fetching orders:', error);
-        }
-      );
-    }
+  console.log("User ID before fetching orders:", this.userId); // 🔍 Check if userId is set
+  if (this.userId) {
+    this.orderService.getOrdersByUser(this.userId).subscribe(
+      (data: any) => {
+        console.log("Orders fetched from API:", data); // 🔍 See full API response
+        this.orders = data.orders || []; // Ensure it assigns correctly
+      },
+      (error) => {
+        console.error("Error fetching orders:", error);
+        this.orders = [];
+      }
+    );
   }
+}
+
 
   toggleOrderDetails(orderId: number) {
     this.expandedOrderId = this.expandedOrderId === orderId ? null : orderId;

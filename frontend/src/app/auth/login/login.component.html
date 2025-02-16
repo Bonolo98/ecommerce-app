@@ -1,7 +1,8 @@
 <div class="login-container">
-  <h2>Login</h2>
+  <a routerLink="/" class="logo">MyStore</a>
   <input class="input-field" [(ngModel)]="username" placeholder="Username" />
   <input class="input-field" [(ngModel)]="password" type="password" placeholder="Password" />
   <button class="login-button" (click)="login()">Login</button>
+  <p class="header-text">Don't have an account? <a routerLink="/register" style="color: #FF8966;">Register</a></p>
   <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 </div>

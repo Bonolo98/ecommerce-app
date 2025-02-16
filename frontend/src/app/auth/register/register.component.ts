@@ -16,7 +16,7 @@ export class RegisterComponent {
   role = 'user';
   email = '';
   phone = '';
-  errorMessage = '';
+  message = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -24,7 +24,7 @@ export class RegisterComponent {
     this.authService.register({ username: this.username, password: this.password, role: this.role, email: this.email, phone: this.phone })
       .subscribe(
         () => this.router.navigate(['/login']),
-        (error) => (this.errorMessage = 'Registration failed')
+        () => (this.message = 'Successfully Registered')
       );
   }
 }
