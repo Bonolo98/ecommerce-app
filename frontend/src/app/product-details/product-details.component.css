@@ -1,9 +1,12 @@
 /* Container Styling */
 .container {
-    width: 100%;
-    max-width: 60em;
+/* max-width: 60em; */
     margin: 0 auto;
     padding: 24px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 24px;
+    background-color: #F8F4E3;
   }
   
   /* Product Card */
@@ -13,6 +16,7 @@
     overflow: hidden;
     text-align: left;
     display: flex;
+    max-width: 60em;
   }
   
   /* Product Image */

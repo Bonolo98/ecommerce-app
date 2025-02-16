@@ -52,6 +52,7 @@ export class CheckoutComponent implements OnInit {
   ngOnInit() {
     this.setUserId();
     this.loadCart();
+    this.loadPaymentDetails();
   }
 
   setUserId() {
@@ -107,12 +108,15 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
+    this.savePaymentDetails(); 
+
     const orderData = {
       userId: this.userId,
       cartItems: this.cartItems,
       totalAmount: this.totalAmount,
       shippingAddress: this.shippingAddress,
-      paymentDetails: this.paymentDetails
+      paymentDetails: this.paymentDetails,
+      phoneNumber: this.phoneNumber
     };
 
     //    this.paystackService.payWithPaystack(
@@ -178,5 +182,17 @@ export class CheckoutComponent implements OnInit {
       }
     );
   }
+
+  savePaymentDetails() {
+    localStorage.setItem('paymentDetails', JSON.stringify(this.paymentDetails));
+  }
+
+  loadPaymentDetails() {
+    const savedDetails = localStorage.getItem('paymentDetails');
+    if (savedDetails) {
+      this.paymentDetails = JSON.parse(savedDetails);
+    }
+  }
+
 }
 

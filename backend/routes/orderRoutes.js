@@ -8,4 +8,3 @@ router.post('/place', ordersController.placeOrder);
 router.get('/user/:userId', ordersController.getOrders);
 
 module.exports = router;
-
