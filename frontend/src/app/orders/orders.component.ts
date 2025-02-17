@@ -36,7 +36,6 @@ export class OrdersComponent implements OnInit {
   ngOnInit() {
     this.setUserId();
     this.fetchOrders();
-    console.log(this.fetchOrders())
   }
 
   setUserId() {
@@ -46,28 +45,13 @@ export class OrdersComponent implements OnInit {
     }
   }
 
-  // fetchOrders() {
-  //   if (this.userId) {
-  //     this.orderService.getOrdersByUser(this.userId).subscribe(
-  //       (data: any) => {
-  //         this.orders = data.orders || [];
-  //         console.log(this.orders);
-  //       },
-  //       (error) => {
-  //         console.error('Error fetching orders:', error);
-  //         this.orders = [];
-  //       }
-  //     );
-  //   }
-  // }
-
   fetchOrders() {
   console.log("User ID before fetching orders:", this.userId); // 🔍 Check if userId is set
   if (this.userId) {
     this.orderService.getOrdersByUser(this.userId).subscribe(
       (data: any) => {
         console.log("Orders fetched from API:", data); // 🔍 See full API response
-        this.orders = data.orders || []; // Ensure it assigns correctly
+        this.orders = data || []; // Ensure it assigns correctly
       },
       (error) => {
         console.error("Error fetching orders:", error);

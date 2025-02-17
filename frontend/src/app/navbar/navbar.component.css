@@ -1,9 +1,13 @@
 .navbar {
   display: flex;
+  /* width: 100vw; */
+  width: 100vw;
+  top: 0;
   align-items: center;
   justify-content: space-between;
   background-color: #E5446D;
   padding: 10px 20px;
+  position: fixed;
 }
 
 .logo {
