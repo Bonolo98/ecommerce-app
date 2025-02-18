@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 
 export interface OrderItem {
-image_url: string;
+  image_url: string;
   id: number;
   name: string;
   price: number;
@@ -28,14 +28,19 @@ export interface Order {
 })
 export class OrdersComponent implements OnInit {
   orders: Order[] = [];
+  cartItems!: OrderItem[];
   userId: number | null = null;
   expandedOrderId: number | null = null; // For toggling order details
 
-  constructor(private orderService: OrderService, private authService: AuthService) {}
+  constructor(
+    private orderService: OrderService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.setUserId();
     this.fetchOrders();
+    console.log(this.orders);
   }
 
   setUserId() {
@@ -45,21 +50,22 @@ export class OrdersComponent implements OnInit {
     }
   }
 
+
   fetchOrders() {
-  console.log("User ID before fetching orders:", this.userId); // 🔍 Check if userId is set
-  if (this.userId) {
-    this.orderService.getOrdersByUser(this.userId).subscribe(
-      (data: any) => {
-        console.log("Orders fetched from API:", data); // 🔍 See full API response
-        this.orders = data || []; // Ensure it assigns correctly
-      },
-      (error) => {
-        console.error("Error fetching orders:", error);
-        this.orders = [];
-      }
-    );
+    console.log('User ID before fetching orders:', this.userId); // 🔍 Check if userId is set
+    if (this.userId) {
+      this.orderService.getOrdersByUser(this.userId).subscribe(
+        (data: any) => {
+          console.log('Orders fetched from API:', data); // 🔍 See full API response
+          this.orders = data || []; // Ensure it assigns correctly
+        },
+        (error) => {
+          console.error('Error fetching orders:', error);
+          this.orders = [];
+        }
+      );
+    }
   }
-}
 
 
   toggleOrderDetails(orderId: number) {
@@ -68,10 +74,14 @@ export class OrdersComponent implements OnInit {
 
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {
-      case 'pending': return 'pending';
-      case 'completed': return 'completed';
-      case 'cancelled': return 'cancelled';
-      default: return '';
+      case 'pending':
+        return 'pending';
+      case 'completed':
+        return 'completed';
+      case 'cancelled':
+        return 'cancelled';
+      default:
+        return '';
     }
   }
 }

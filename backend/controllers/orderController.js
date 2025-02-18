@@ -60,33 +60,63 @@ exports.placeOrder = async (req, res) => {
 // };
 
 
+// exports.getOrders = async (req, res) => {
+//   try {
+//     const { userId } = req.params;
+
+//     if (!userId) {
+//       return res.status(400).json({ success: false, message: "User ID is required" });
+//     }
+
+//     const orders = await pool.query(
+//       `SELECT o.id, o.total_amount, o.phone_number, o.shipping_address, o.status, o.created_at,
+//               json_agg(json_build_object(
+//                 'product_id', op.product_id, 
+//                 'quantity', op.quantity, 
+//                 'unit_price', op.unit_price,
+//                 'name', p.name,
+//                 'image_url', p.image_url
+//               )) AS cart_items
+//        FROM orders o
+//        JOIN order_products op ON o.id = op.order_id
+//        JOIN products p ON op.product_id = p.id
+//        WHERE o.user_id = $1
+//        GROUP BY o.id
+//        ORDER BY o.created_at DESC`,
+//       [userId]
+//     );
+
+//     res.json({ success: true, orders: orders.rows });
+//   } catch (err) {
+//     console.error("Error fetching orders:", err);
+//     res.status(500).json({ success: false, message: "Server error" });
+//   }
+// };
+
+
 exports.getOrders = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    if (!userId) {
-      return res.status(400).json({ success: false, message: "User ID is required" });
-    }
-
-    const orders = await pool.query(
+    const result = await pool.query(
       `SELECT o.id, o.total_amount, o.phone_number, o.shipping_address, o.status, o.created_at,
-              json_agg(json_build_object(
-                'product_id', op.product_id, 
-                'quantity', op.quantity, 
+              COALESCE(json_agg(json_build_object(
+                'product_id', op.product_id,
+                'quantity', op.quantity,
                 'unit_price', op.unit_price,
                 'name', p.name,
                 'image_url', p.image_url
-              )) AS cart_items
+              )) FILTER (WHERE op.product_id IS NOT NULL), '[]') AS cart_items
        FROM orders o
-       JOIN order_products op ON o.id = op.order_id
-       JOIN products p ON op.product_id = p.id
+       LEFT JOIN order_products op ON o.id = op.order_id
+       LEFT JOIN products p ON op.product_id = p.id
        WHERE o.user_id = $1
        GROUP BY o.id
        ORDER BY o.created_at DESC`,
       [userId]
     );
 
-    res.json({ success: true, orders: orders.rows });
+    res.json({ success: true, orders: result.rows });
   } catch (err) {
     console.error("Error fetching orders:", err);
     res.status(500).json({ success: false, message: "Server error" });

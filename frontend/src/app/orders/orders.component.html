@@ -16,7 +16,7 @@
         </span> -->
       </div>
   
-      <p><strong>Total:</strong> R{{ order.totalAmount || order.totalAmount }}</p>
+      <p><strong>Total:</strong> R{{ order.totalAmount }}</p>
       <p><strong>Shipping Address:</strong> {{ order.shippingAddress }}</p>
   
       <button (click)="toggleOrderDetails(order.id)" class="details-button">
