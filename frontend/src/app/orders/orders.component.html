@@ -16,8 +16,8 @@
         </span> -->
       </div>
   
-      <p><strong>Total:</strong> R{{ order.totalAmount }}</p>
-      <p><strong>Shipping Address:</strong> {{ order.shippingAddress }}</p>
+      <p><strong>Total:</strong> R{{ order.total_amount }}</p>
+      <p><strong>Shipping Address:</strong> {{ order.shipping_address }}</p>
   
       <button (click)="toggleOrderDetails(order.id)" class="details-button">
         {{ expandedOrderId === order.id ? 'Hide Details' : 'View Details' }}
@@ -26,7 +26,7 @@
       <!-- Order Items (Collapsible) -->
       <div *ngIf="expandedOrderId === order.id" class="order-items">
         <h4>Items:</h4>
-        <div *ngFor="let item of order.cartItems" class="order-item">
+        <div *ngFor="let item of order.cart_items" class="order-item">
           <img [src]="item.image || item.image_url" alt="{{ item.name }}" class="item-image" />
           <div class="item-details">
             <h5>{{ item.name }}</h5>

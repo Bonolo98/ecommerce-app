@@ -14,10 +14,10 @@ export interface OrderItem {
 
 export interface Order {
   id: number;
-  totalAmount: number;
-  shippingAddress: string;
+  total_amount: number;
+  shipping_address: string;
   status: string;
-  cartItems: OrderItem[];
+  cart_items: OrderItem[];
 }
 
 @Component({
