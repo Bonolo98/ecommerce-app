@@ -100,7 +100,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   submitReview() {
-    if (!this.authService.isAuthenticated()) {
+    if (!this.userId) {
+      alert('Please Login')
       this.router.navigate(['/login']);
       return;
     }
