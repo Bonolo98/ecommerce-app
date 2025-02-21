@@ -28,7 +28,6 @@ export interface Order {
 })
 export class OrdersComponent implements OnInit {
   orders: Order[] = [];
-  cartItems!: OrderItem[];
   userId: number | null = null;
   expandedOrderId: number | null = null; // For toggling order details
 
