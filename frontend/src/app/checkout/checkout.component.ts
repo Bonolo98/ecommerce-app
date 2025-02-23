@@ -5,7 +5,6 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PaystackService } from '../services/paystack.service';
 
 interface CartItem {
   id: number;
@@ -46,7 +45,6 @@ export class CheckoutComponent implements OnInit {
     private orderService: OrderService,
     private authService: AuthService,
     private router: Router,
-    private paystackService: PaystackService,
   ) {}
 
   ngOnInit() {
