@@ -1,35 +1,37 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:3000/api/products';
+  private baseUrl = 'https://ecommerce-app-zp2y.onrender.com/api/products'; // ✅ Use the deployed backend
 
   constructor(private http: HttpClient) {}
 
-  getProducts() {
-    return this.http.get(this.apiUrl);
+  // Fetch all products
+  getProducts(): Observable<any> {
+    return this.http.get(`${this.baseUrl}`);
   }
 
-  searchProducts() {
-    return this.http.get(this.apiUrl);
+  // Fetch a single product by ID
+  getProductById(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
 
-  getProductById(id: number) {
-    return this.http.get(`${this.apiUrl}/${id}`);
+  // Create a new product (admin)
+  addProduct(product: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}`, product);
   }
 
-  createProduct(product: any) {
-    return this.http.post(this.apiUrl, product);
+  // Update a product (admin)
+  updateProduct(id: number, product: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${id}`, product);
   }
 
-  updateProduct(id: number, product: any) {
-    return this.http.put(`${this.apiUrl}/${id}`, product);
-  }
-
-  deleteProduct(id: number) {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  // Delete a product (admin)
+  deleteProduct(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
 }
