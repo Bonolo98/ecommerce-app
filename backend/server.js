@@ -16,7 +16,15 @@ app.use(bodyParser.json());
 app.use(logger);
 
 
-// const allowedOrigins = [
+app.use(cors({
+    origin: '*',
+    methods: 'GET, POST, PUT, DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
+  }));
+
+
+
+  // const allowedOrigins = [
 //   'http://localhost:4200',
 //   'https://ecommerce-9aaslz4fy-bonolos-projects-1c1373ab.vercel.app',
 //   'https://ecommerce-app-bonolos-projects-1c1373ab.vercel.app'
@@ -33,17 +41,6 @@ app.use(logger);
 //   methods: 'GET, POST, PUT, DELETE',
 //   allowedHeaders: 'Content-Type, Authorization'
 // }));
-
-
-const cors = require('cors');
-
-app.use(cors({
-  origin: '*', // Temporarily allow all origins for testing
-  methods: 'GET, POST, PUT, DELETE',
-  allowedHeaders: 'Content-Type, Authorization'
-}));
-
-
 
 // Routes
 app.use("/api/auth", authRoutes);
