@@ -10,8 +10,8 @@ const register = async (req, res) => {
 
   try {
     const userResult = await pool.query(
-      "INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING id",
-      [username, hashedPassword, role]
+      "INSERT INTO users (username, email, password, role, created_at) VALUES ($1, $2, $3, $4, NOW()) RETURNING id",
+      [username,email, hashedPassword, role]
     );
 
     if (role === "user") {
