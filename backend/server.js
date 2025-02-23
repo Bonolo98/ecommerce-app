@@ -27,7 +27,8 @@ app.use(logger);
   const allowedOrigins = [
   'http://localhost:4200',
   'https://ecommerce-9aaslz4fy-bonolos-projects-1c1373ab.vercel.app',
-  'https://ecommerce-app-bonolos-projects-1c1373ab.vercel.app'
+  'https://ecommerce-app-bonolos-projects-1c1373ab.vercel.app',
+  'https://ecommerce-app-zp2y.onrender.com',
 ];
 
 app.use(cors({
@@ -39,7 +40,8 @@ app.use(cors({
     }
   },
   methods: 'GET, POST, PUT, DELETE',
-  allowedHeaders: 'Content-Type, Authorization'
+  allowedHeaders: 'Content-Type, Authorization',
+  credentials: true,
 }));
 
 // Routes
