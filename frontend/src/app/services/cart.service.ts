@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 import { CartItem } from '../cart/cart.component';
 
 @Injectable({
@@ -23,7 +23,8 @@ export class CartService {
   addToCart(userId: number | null, product: any): Observable<any> {
     const productId = product.id;
     const name = product.name;
-    console.log(name);
+    const price = product.price;
+    console.log('SERVICE PRODUCT:', product);
   
     if (userId) {
       return this.http.post(`${this.apiUrl}/add`, { userId, productId }); // Only send productId
@@ -34,7 +35,7 @@ export class CartService {
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
-        cart.push({ id: productId, quantity: 1 });
+        cart.push({ id: productId, quantity: 1, name: name, price: price  });
       }
   
       this.saveCartToLocalStorage(cart);

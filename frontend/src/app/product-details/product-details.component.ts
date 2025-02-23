@@ -49,21 +49,15 @@ export class ProductDetailsComponent implements OnInit {
 
   getUserId() {
     this.userId = this.authService.getUserId();
-    // console.log('User ID:', this.userId);
   }
 
   addToCart(productId: number) {
-    // const userId = this.getUserId();
-    // console.log('User ID:', userId);
-
     if (this.userId) {
-      console.log(this.userId);
       this.cartService.addToCart(this.userId, productId).subscribe(() => {
         console.log('Product added to cart successfully');
       });
     } else {
       this.cartService.addToCart(null, productId).subscribe(() => {
-        console.log(productId);
         console.log('Product added to local cart');
       });
     }
