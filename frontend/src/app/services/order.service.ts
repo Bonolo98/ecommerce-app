@@ -7,7 +7,8 @@ import { Order } from '../orders/orders.component';
   providedIn: 'root'
 })
 export class OrderService {
-  private apiUrl = 'http://localhost:3000/api/orders';
+  // private apiUrl = 'http://localhost:3000/api/orders';
+  private apiUrl = 'https://ecommerce-app-zp2y.onrender.com/api/orders';
 
   constructor(private http: HttpClient) {}
 

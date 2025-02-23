@@ -6,7 +6,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class CartService {
-  private apiUrl = 'http://localhost:3000/api/cart';
+  // private apiUrl = 'http://localhost:3000/api/cart';
+  private apiUrl = 'https://ecommerce-app-zp2y.onrender.com/api/cart';
 
   // BehaviorSubject to store cart state
   private cartSubject = new BehaviorSubject<any[]>([]);
