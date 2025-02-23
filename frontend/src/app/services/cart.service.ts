@@ -24,7 +24,7 @@ export class CartService {
     const productId = product.id;
     const name = product.name;
     const price = product.price;
-    console.log('SERVICE PRODUCT:', product);
+    const image = product.image;
   
     if (userId) {
       return this.http.post(`${this.apiUrl}/add`, { userId, productId }); // Only send productId
@@ -35,7 +35,7 @@ export class CartService {
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
-        cart.push({ id: productId, quantity: 1, name: name, price: price  });
+        cart.push({ id: productId, quantity: 1, name: name, price: price, image: image });
       }
   
       this.saveCartToLocalStorage(cart);
@@ -115,8 +115,5 @@ syncLocalCartToDatabase(userId: string, cartItems: any[]) {
     }
   );
 }
-
-
-
 }
 

@@ -20,6 +20,7 @@ export interface CartItem {
   styleUrls: ['./cart.component.css'],
   standalone: true,
 })
+
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   userId: number | null = null;
