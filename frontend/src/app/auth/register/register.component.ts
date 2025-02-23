@@ -21,7 +21,7 @@ export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   register() {
-    this.authService.register({ username: this.username, password: this.password, role: this.role, email: this.email, phone: this.phone })
+    this.authService.register({ username: this.username, password: this.password, email: this.email, phone: this.phone })
       .subscribe(
         () => this.router.navigate(['/login']),
         () => (this.message = 'Successfully Registered')

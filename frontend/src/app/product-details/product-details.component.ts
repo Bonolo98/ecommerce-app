@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ProductDetailsComponent implements OnInit {
   product: any = {};
+  productId: number;
   userId!: number;
   showDescription: boolean = false;
   reviews: any[] = [];
@@ -28,12 +29,14 @@ export class ProductDetailsComponent implements OnInit {
     private reviewService: ReviewService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.productId = route.snapshot.params['id'];
+  }
 
   ngOnInit(): void {
-    const productId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchProductDetails(productId);
-    this.fetchReviews(productId);
+    // const productId = Number(this.route.snapshot.paramMap.get('id'));
+    this.fetchProductDetails(this.productId);
+    this.fetchReviews(this.productId);
 
     this.getUserId();
     const id = this.route.snapshot.paramMap.get('id');
@@ -49,16 +52,6 @@ export class ProductDetailsComponent implements OnInit {
     // console.log('User ID:', this.userId);
   }
 
-  // addToCart(product: any): void {
-  //   const token = this.authService.getToken();
-  //   const userId = token ? JSON.parse(atob(token.split('.')[1])).id : null;
-
-  //   console.log(product.id)
-
-  //   this.cartService.addToCart(userId, product.id);
-  //   alert(`${product.name} added to cart!`);
-  // }
-
   addToCart(productId: number) {
     // const userId = this.getUserId();
     // console.log('User ID:', userId);
@@ -70,6 +63,7 @@ export class ProductDetailsComponent implements OnInit {
       });
     } else {
       this.cartService.addToCart(null, productId).subscribe(() => {
+        console.log(productId);
         console.log('Product added to local cart');
       });
     }
