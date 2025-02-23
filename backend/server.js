@@ -16,11 +16,30 @@ app.use(bodyParser.json());
 app.use(logger);
 
 
+// app.use(cors({
+//     origin: 'http://localhost:4200',
+//     methods: 'GET, POST, PUT, DELETE',
+//     allowedHeaders: 'Content-Type, Authorization',
+//   }));
+
+const allowedOrigins = [
+  'http://localhost:4200',
+  'https://ecommerce-9aaslz4fy-bonolos-projects-1c1373ab.vercel.app',
+  'https://ecommerce-app-bonolos-projects-1c1373ab.vercel.app'
+];
+
 app.use(cors({
-    origin: 'http://localhost:4200',
-    methods: 'GET, POST, PUT, DELETE',
-    allowedHeaders: 'Content-Type, Authorization',
-  }));
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET, POST, PUT, DELETE',
+  allowedHeaders: 'Content-Type, Authorization'
+}));
+
 
 // Routes
 app.use("/api/auth", authRoutes);
