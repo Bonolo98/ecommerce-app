@@ -7,8 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  // private apiUrl = 'http://localhost:3000/api/auth';
-  private apiUrl = 'https://ecommerce-app-zp2y.onrender.com';
+  private apiUrl = 'http://localhost:3000/api/auth';
+  // private apiUrl = 'https://ecommerce-app-zp2y.onrender.com/api/auth';
+  // private apiUrl = 'https://ecommerce-app-zp2y.onrender.com';
 
   constructor(private http: HttpClient, private router: Router) {}
 
