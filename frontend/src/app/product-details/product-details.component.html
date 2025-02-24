@@ -60,15 +60,16 @@
   <div class="add-review">
     <h3>Add a Review</h3>
 
-    <!-- Clickable Star Rating -->
-    <div class="star-rating">
-      <i 
-        *ngFor="let star of [1,2,3,4,5]; let i = index" 
-        class="fa-solid fa-star"
-        [ngClass]="newReview.rating > i ? 'filled' : ''"
-        (click)="setRating(i + 1)"
-      ></i>
-    </div>
+<!-- Clickable Star Rating -->
+<div class="star-rating">
+  <i 
+    *ngFor="let star of [1,2,3,4,5]; let i = index" 
+    class="fa fa-star"
+    [ngClass]="{'filled': newReview.rating > i}"
+    (click)="setRating(i + 1)"
+  ></i>
+</div>
+
 
     <textarea [(ngModel)]="newReview.comment" placeholder="Write your review here..."></textarea>
     <button  (click)="submitReview()">Post Review</button>

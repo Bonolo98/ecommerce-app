@@ -2,7 +2,13 @@
   <a routerLink="/" class="logo">CompuTech</a>
   <input class="input-field" [(ngModel)]="username" placeholder="Username" />
   <input class="input-field" [(ngModel)]="password" type="password" placeholder="Password" />
-  <button class="login-button" (click)="login()">Login</button>
+  <button class="login-button" (click)="login()" [disabled]="isLoading">Login</button>
   <p class="header-text">Don't have an account? <a routerLink="/register" style="color: #FF8966;">Register</a></p>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+
   <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 </div>

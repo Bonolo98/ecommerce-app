@@ -116,7 +116,7 @@ export class ProductDetailsComponent implements OnInit {
     );
   }
 
-  setRating(value: number) {
-    this.newReview.rating = value;
+  setRating(star: number) {
+    this.newReview.rating = star;
   }
 }

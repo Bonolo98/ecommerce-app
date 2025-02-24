@@ -1,8 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const pool = require("../db");
-const asyncHandler = require('express-async-handler');
-const User = require('../model/userModel'); // Import your User model
+const asyncHandler = require("express-async-handler");
+const User = require("../model/userModel");
 
 const register = async (req, res) => {
   const { username, password, role, email, phone } = req.body;
@@ -11,12 +11,14 @@ const register = async (req, res) => {
   try {
     const userResult = await pool.query(
       "INSERT INTO users (username, email, password, role, created_at) VALUES ($1, $2, $3, $4, NOW()) RETURNING id",
-      [username,email, hashedPassword, role]
+      [username, email, hashedPassword, role]
     );
 
     if (role === "user") {
-      await pool.query("INSERT INTO customers (user_id, email, phone) VALUES ($1, $2, $3)", 
-        [userResult.rows[0].id, email, phone]);
+      await pool.query(
+        "INSERT INTO customers (user_id, email, phone) VALUES ($1, $2, $3)",
+        [userResult.rows[0].id, email, phone]
+      );
     }
 
     res.send("User registered successfully.");
@@ -29,7 +31,9 @@ const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+    const result = await pool.query("SELECT * FROM users WHERE username = $1", [
+      username,
+    ]);
     const user = result.rows[0];
 
     if (!user) return res.status(404).send("User not found.");
@@ -37,33 +41,36 @@ const login = async (req, res) => {
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) return res.status(401).send("Invalid credentials.");
 
-    const token = jwt.sign({ id: user.id, username: user.username, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(
+      { id: user.id, username: user.username, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
     res.send({ token });
   } catch (err) {
     res.status(400).send("Error: " + err.message);
   }
 };
 
-
 const getUserProfile = asyncHandler(async (req, res) => {
   try {
-      const user = await User.findById(req.user.id); // Fetch user details using the ID from JWT
+    const user = await User.findById(req.user.id); // Fetch user details using the ID from JWT
 
-      if (!user) {
-          return res.status(404).json({ message: "User not found" });
-      }
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-      res.json({
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          role: user.role
-      });
+    res.json({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    });
   } catch (err) {
-      res.status(500).json({ message: "Error fetching user profile", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching user profile", error: err.message });
   }
 });
 
-
 module.exports = { register, login, getUserProfile };
-
