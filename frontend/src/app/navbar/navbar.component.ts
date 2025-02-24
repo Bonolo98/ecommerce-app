@@ -1,11 +1,5 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
@@ -17,13 +11,7 @@ import { SearchService } from '../services/search.service';
   imports: [
     CommonModule,
     RouterModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    FormsModule,
+    FormsModule
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
@@ -31,21 +19,26 @@ import { SearchService } from '../services/search.service';
 export class NavbarComponent {
   searchQuery: string = '';
   menuOpen: boolean = false;
-  username!: string;
+  username: string = '';
+  isLoggedIn: boolean = false;
 
   authService = inject(AuthService);
   searchService = inject(SearchService);
 
   @Output() searchQueryChange = new EventEmitter<string>();
 
-  isLoggedIn = false;
-
   ngOnInit() {
-    this.loadUsername(); // Load username on init
+    this.updateUserInfo();
+    
+    this.authService.isLoggedIn$.subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+      this.updateUserInfo();
+    });
   }
 
-  loadUsername() {
-    this.username = this.authService.getUsername();
+  updateUserInfo() {
+    this.username = this.authService.getUsername() || '';
+    this.isLoggedIn = this.authService.isAuthenticated();
   }
 
   onSearchChange() {
@@ -56,12 +49,7 @@ export class NavbarComponent {
     this.menuOpen = !this.menuOpen;
   }
 
-  goToProfile() {
-    console.log('Navigating to profile...');
-  }
-
   logout() {
     this.authService.logout();
-    location.reload();
   }
 }

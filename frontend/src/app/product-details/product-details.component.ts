@@ -34,7 +34,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // const productId = Number(this.route.snapshot.paramMap.get('id'));
     this.fetchProductDetails(this.productId);
     this.fetchReviews(this.productId);
 
@@ -48,8 +47,9 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getUserId() {
-    this.userId = this.authService.getUserId();
+    this.userId = this.authService.getUserId() as number;
   }
+  
 
   addToCart(productId: number) {
     if (this.userId) {
@@ -103,8 +103,8 @@ export class ProductDetailsComponent implements OnInit {
     this.reviewService.addReview(reviewData).subscribe(
       (response) => {
         console.log('Review added:', response);
-        this.newReview = { rating: 0, comment: '' }; // Reset form
-        this.fetchReviews(this.product.id); // Refresh reviews
+        this.newReview = { rating: 0, comment: '' };
+        this.fetchReviews(this.product.id);
       },
       (error) => {
         if (error.status === 401) {

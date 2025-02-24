@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 
 @Injectable({
@@ -9,11 +9,24 @@ import { environment } from '../../environments/environment.prod';
 })
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
+  private isLoggedInSubject = new BehaviorSubject<boolean>(this.isAuthenticated()); 
+
+  isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
   login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials);
+    return new Observable((observer) => {
+      this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials).subscribe({
+        next: (response) => {
+          localStorage.setItem('token', response.token);
+          this.isLoggedInSubject.next(true); 
+          observer.next(response);
+          observer.complete();
+        },
+        error: (error) => observer.error(error),
+      });
+    });
   }
 
   register(user: { username: string; password: string; email?: string; phone?: string }) {
@@ -22,6 +35,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    this.isLoggedInSubject.next(false);
     this.router.navigate(['/login']);
   }
 
@@ -29,18 +43,15 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
-
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  getUsername(): any {
-    const token = this.getToken(); // Retrieve token from localStorage
+  getUsername(): string | null {
+    const token = this.getToken();
     if (!token) return null;
-  
     try {
-      const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
-      console.log('Decoded JWT:', payload); // Debugging
+      const payload = JSON.parse(atob(token.split('.')[1])); 
       return payload.username || null;
     } catch (error) {
       console.error('Error decoding token:', error);
@@ -48,13 +59,11 @@ export class AuthService {
     }
   }
 
-  getUserId(): any {
-    const token = this.getToken(); // Retrieve token from localStorage
+  getUserId(): number | null {
+    const token = this.getToken();
     if (!token) return null;
-  
     try {
-      const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
-      console.log('Decoded JWT:', payload); // Debugging
+      const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.id || null;
     } catch (error) {
       console.error('Error decoding token:', error);
@@ -67,12 +76,10 @@ export class AuthService {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
-
   getUserRole(): string {
     const token = this.getToken();
     if (!token) return '';
     const payload = JSON.parse(atob(token.split('.')[1]));
     return payload.role;
   }
-  
 }

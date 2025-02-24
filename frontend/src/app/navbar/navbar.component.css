@@ -1,3 +1,29 @@
+/* General Navbar Styling */
+/* .navbar {
+  display: flex;
+  width: 100vw;
+  height: 4em;
+  top: 0;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #E5446D;
+  padding: 10px 20px;
+  position: fixed;
+  z-index: 1000;
+}
+
+.navbar-content {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+} */
+
+
+
+
+
 .navbar {
   display: flex;
   width: 100vw;
@@ -23,6 +49,16 @@
 
 }
 
+
+
+
+
+
+
+
+
+
+/* Logo */
 .logo {
   font-size: 22px;
   font-weight: bold;
@@ -30,6 +66,7 @@
   text-decoration: none;
 }
 
+/* Search Bar */
 .search-container {
   display: flex;
   align-items: center;
@@ -38,15 +75,16 @@
 }
 
 .search-input {
-  width: 300px; /* Increased width */
+  width: 300px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  transition: width 0.3s ease;
 }
 
 .search-btn {
   background-color: #FF8966;
-  padding: 3px 10px;
+  padding: 6px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -54,59 +92,73 @@
   margin-left: 5px;
 }
 
+/* Navigation Links */
 .nav-links {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.wishlist-link,
-.cart-link {
-  font-size: 22px;
-  text-decoration: none;
-  color: white;
-}
-
-/* Dropdown Styles */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropbtn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-}
-
-.dropdown-content {
+/* Hide the hamburger icon on large screens */
+.menu-icon {
   display: none;
-  position: absolute;
-  right: 0;
-  background-color: white;
-  min-width: 120px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  border-radius: 5px;
-}
-
-.dropdown-content a {
-  color: black;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
   padding: 10px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
 }
 
 .login-text {
   color: white;
   font-weight: bold;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .search-container {
+    display: none; /* Hide search bar on small screens */
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 200px;
+    background: #E5446D;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+  }
+
+  .nav-links a {
+    padding: 10px;
+    text-align: center;
+    display: block;
+  }
+
+  /* Show the hamburger icon only on small screens */
+  .menu-icon {
+    display: block;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px 12px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .nav-links {
+    width: 100%;
+    right: 0;
+  }
 }
