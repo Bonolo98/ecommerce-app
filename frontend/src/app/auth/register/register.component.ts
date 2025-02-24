@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-register',
-    imports: [CommonModule, FormsModule, RouterLink],
-    templateUrl: './register.component.html',
-    styleUrls: ['./register.component.css']
+  selector: 'app-register',
+  imports: [CommonModule, FormsModule],
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   username = '';
@@ -20,11 +20,27 @@ export class RegisterComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  isFormValid(): boolean {
+    return !!this.username && !!this.password && this.password.length >= 6;
+  }
+
   register() {
-    this.authService.register({ username: this.username, password: this.password, email: this.email, phone: this.phone })
-      .subscribe(
-        () => this.router.navigate(['/login']),
-        () => (this.message = 'Successfully Registered')
-      );
+    if (this.isFormValid()) {
+      this.authService.register({ username: this.username, password: this.password, email: this.email, phone: this.phone })
+        .subscribe(
+          (response) => {
+            if (response) {
+              alert('Successfully Registered! You can now log in.');
+              this.router.navigate(['/login']);
+            }
+          },
+          (error) => {
+            console.error('Registration error', error);
+            this.message = 'Registration failed. Please try again.';
+          }
+        );
+    } else {
+      this.message = 'Please fill out all required fields correctly.';
+    }
   }
 }

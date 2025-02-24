@@ -1,14 +1,66 @@
 <div class="container">
   <a routerLink="/" class="logo">CompuTech</a>
-  <input class="input-field" [(ngModel)]="username" placeholder="Username" />
-  <input class="input-field" [(ngModel)]="password" type="password" placeholder="Password" />
-  <select class="option-field" [(ngModel)]="role"  value="user" hidden>
-      <!-- <option value="user">User</option>
-      <option value="admin">Admin</option> -->
-  </select>
-  <input class="input-field" [(ngModel)]="email" placeholder="Email (optional)" />
-  <input class="input-field" [(ngModel)]="phone" placeholder="Phone (optional)" />
-  <button class="register-button" (click)="register()">Register</button>
-  <p class="header-text">Already have an account? <a routerLink="/login" style="color: #FF8966;">Login</a></p>
+  
+  <!-- Username -->
+  <input
+    class="input-field"
+    [(ngModel)]="username"
+    name="username"
+    placeholder="Username"
+    required
+    minlength="3"
+    #usernameInput="ngModel"
+  />
+  <div *ngIf="usernameInput.invalid && usernameInput.touched" class="error-message">
+    Username is required and must be at least 3 characters long.
+  </div>
+
+  <!-- Password -->
+  <input
+    class="input-field"
+    [(ngModel)]="password"
+    name="password"
+    type="password"
+    placeholder="Password"
+    required
+    minlength="6"
+    #passwordInput="ngModel"
+  />
+  <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-message">
+    Password is required and must be at least 6 characters long.
+  </div>
+
+  <!-- Email -->
+  <input
+    class="input-field"
+    [(ngModel)]="email"
+    name="email"
+    placeholder="Email (optional)"
+    type="email"
+    #emailInput="ngModel"
+  />
+  <div *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
+    Please enter a valid email address.
+  </div>
+
+  <!-- Phone -->
+  <input
+    class="input-field"
+    [(ngModel)]="phone"
+    name="phone"
+    placeholder="Phone (optional)"
+    type="tel"
+    #phoneInput="ngModel"
+  />
+  <div *ngIf="phoneInput.invalid && phoneInput.touched" class="error-message">
+    Please enter a valid phone number (optional).
+  </div>
+
+  <button class="register-button" (click)="register()" [disabled]="!isFormValid()">Register</button>
+
+  <p class="header-text">
+    Already have an account? <a routerLink="/login" style="color: #FF8966;">Login</a>
+  </p>
+
   <p *ngIf="message" class="error-message">{{ message }}</p>
 </div>

@@ -30,9 +30,9 @@ export class AuthService {
   }
 
   register(user: { username: string; password: string; email?: string; phone?: string }) {
-    return this.http.post(`${this.apiUrl}/register`, user);
+    return this.http.post<string>(`${this.apiUrl}/register`, user, { responseType: 'text' as 'json' });
   }
-
+  
   logout() {
     localStorage.removeItem('token');
     this.isLoggedInSubject.next(false);
