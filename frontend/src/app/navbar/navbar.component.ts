@@ -46,7 +46,6 @@ export class NavbarComponent {
 
   loadUsername() {
     this.username = this.authService.getUsername();
-    console.log('Navbar Username:', this.username); // Debugging
   }
 
   onSearchChange() {
@@ -63,5 +62,6 @@ export class NavbarComponent {
 
   logout() {
     this.authService.logout();
+    location.reload();
   }
 }

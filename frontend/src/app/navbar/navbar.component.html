@@ -1,4 +1,6 @@
 <nav class="navbar">
+  <div class="navbar-content">
+
   <a routerLink="/" class="logo">CompuTech</a>
 
   <div class="search-container">
@@ -28,14 +30,10 @@
 
     <span class="login-text"  *ngIf="username">{{ username }}</span>
 
-    <div class="dropdown">
-      <button class="dropbtn">
-        <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/FFFFFF/user.png" alt="user"/>
-      </button>
-      <div class="dropdown-content">
-        <a routerLink="/profile">Profile</a>
-        <a (click)="logout()">Logout</a>
-      </div>
-    </div>
+    <span class="login-text"  *ngIf="username" (click)="logout()">Logout</span>
+    <span class="login-text"  *ngIf="!username" routerLink="/login">Login</span>
   </div>
+  </div>
+
+  
 </nav>

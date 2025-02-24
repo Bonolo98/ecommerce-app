@@ -1,13 +1,26 @@
 .navbar {
   display: flex;
-  /* width: 100vw; */
   width: 100vw;
+  height: 4em;
   top: 0;
   align-items: center;
   justify-content: space-between;
   background-color: #E5446D;
-  padding: 10px 20px;
-  position: fixed;
+  padding: 10px 20px 10px 20px; 
+  position: fixed; 
+  background-color: #E5446D;
+}
+
+.navbar-content {
+  display: flex;
+  width: 90vw;
+  height: 4em;
+  top: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 50px 10px 50px;
+  /* position: fixed; */
+
 }
 
 .logo {
