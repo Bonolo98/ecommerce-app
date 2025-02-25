@@ -95,6 +95,14 @@
   color: white;
 }
 
+
+.toggle-btn {
+  background-color: #FF8966;
+  color: white;
+  border: none;
+  margin-right: 10px;
+}
+
 /* Reviews Section */
 .reviews-section {
   margin-top: 20px;

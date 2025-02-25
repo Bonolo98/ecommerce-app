@@ -95,6 +95,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   placeOrder() {
+    
     if (!this.userId) {
       alert('Please log in to proceed with checkout.');
       this.router.navigate(['/login']);
@@ -108,26 +109,35 @@ export class CheckoutComponent implements OnInit {
 
     this.savePaymentDetails(); 
 
+    // const orderData = {
+    //   userId: this.userId,
+    //   cartItems: this.cartItems,
+    //   totalAmount: this.totalAmount,
+    //   shippingAddress: this.shippingAddress,
+    //   paymentDetails: this.paymentDetails,
+    //   phoneNumber: this.phoneNumber
+    // };
+
     const orderData = {
       userId: this.userId,
-      cartItems: this.cartItems,
+      cartItems: this.cartItems.map(item => ({
+        productId: item.id, // Convert `id` to `productId`
+        quantity: item.quantity,
+        price: item.price // Ensure price is a number
+      })),
       totalAmount: this.totalAmount,
       shippingAddress: this.shippingAddress,
-      paymentDetails: this.paymentDetails,
       phoneNumber: this.phoneNumber
     };
 
-    //    this.paystackService.payWithPaystack(
-    //   this.email,
-    //   this.totalAmount,
-    //   (response) => {
-    //     console.log('Payment successful:', response);
-    //     this.saveOrder(response.reference);
-    //   },
-    //   () => {
-    //     console.log('Payment window closed');
-    //   }
-    // );
+    console.log('Cart Items:', this.cartItems); // Log cart items before sending
+    // Check for invalid productIds manually if needed
+    this.cartItems.forEach(item => {
+      if (!item.id) {
+        console.log('Invalid productId found:', item);
+      }
+    });
+    
 
     this.orderService.placeOrder(orderData).subscribe(
       () => {

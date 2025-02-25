@@ -9,11 +9,12 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { OrdersComponent } from './orders/orders.component';
+import { AuthRestrictGuard } from './guards/auth-restrict.guard';
 
 export const routes: Routes = [
     { path: '', component: ProductListComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
+    { path: 'login', component: LoginComponent, canActivate: [AuthRestrictGuard] },
+    { path: 'register', component: RegisterComponent, canActivate: [AuthRestrictGuard] },
     { path: 'product/:id', component: ProductDetailsComponent },
     { path: 'cart', component: CartComponent},
     { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },

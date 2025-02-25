@@ -31,6 +31,7 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: any[] = [];
   searchQuery: string = '';
+  isLoading = false;
 
   constructor(
     private productService: ProductService,
@@ -49,9 +50,11 @@ export class ProductListComponent implements OnInit {
   }
 
   loadProducts() {
+    this.isLoading = true;
     this.productService.getProducts().subscribe((data: any) => {
       this.products = data;
       this.filteredProducts = data; // Show all initially
+      this.isLoading = false;
     });
   }
 

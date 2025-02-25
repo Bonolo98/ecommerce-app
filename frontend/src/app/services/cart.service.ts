@@ -12,7 +12,7 @@ export class CartService {
 
   // BehaviorSubject to store cart state
   private cartSubject = new BehaviorSubject<CartItem[]>([]);
-  cart$ = this.cartSubject.asObservable(); // Expose cart observable
+  cart$ = this.cartSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -20,22 +20,57 @@ export class CartService {
     return this.http.get(`${this.apiUrl}/${userId}`);
   }
 
+  // addToCart(userId: number | null, product: any): Observable<any> {
+  //   console.log(userId);
+  //   const productId = product.id;
+  
+  //   if (userId) {
+  //     return this.http.post(`${this.apiUrl}/add`, {
+  //       userId,
+  //       items: [{ productId, quantity: 1 }]
+  //     });
+  //   } else {
+  //     let cart = this.getCartFromLocalStorage();
+  //     const existingItem = cart.find((item: any) => item.id === productId);
+  
+  //     if (existingItem) {
+  //       existingItem.quantity += 1;
+  //     } else {
+  //       cart.push({ id: productId, quantity: 1, name: product.name, price: product.price, image: product.image });
+  //     }
+  
+  //     this.saveCartToLocalStorage(cart);
+  //     this.cartSubject.next(cart);
+  //     return new Observable((observer) => {
+  //       observer.next();
+  //       observer.complete();
+  //     });
+  //   }
+  // }
+
   addToCart(userId: number | null, product: any): Observable<any> {
-    const productId = product.id;
-    const name = product.name;
-    const price = product.price;
-    const image = product.image;
+    const productId = product.id;  // This is fine, but ensure consistency in the cart as well
+    console.log(productId);
   
     if (userId) {
-      return this.http.post(`${this.apiUrl}/add`, { userId, productId }); // Only send productId
+      return this.http.post(`${this.apiUrl}/add`, {
+        userId,
+        items: [{ productId, quantity: 1 }]
+      });
     } else {
       let cart = this.getCartFromLocalStorage();
-      const existingItem = cart.find((item: any) => item.id === productId);
+      const existingItem = cart.find((item: any) => item.productId === productId);  // Use productId for consistency
   
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
-        cart.push({ id: productId, quantity: 1, name: name, price: price, image: image });
+        cart.push({
+          productId,  // Ensure this is productId to match backend
+          quantity: 1,
+          name: product.name,
+          price: product.price,
+          image: product.image
+        });
       }
   
       this.saveCartToLocalStorage(cart);
@@ -46,6 +81,8 @@ export class CartService {
       });
     }
   }
+  
+  
   
 
   refreshCart(userId: number) {
@@ -67,9 +104,17 @@ export class CartService {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }
 
+  // getCartFromLocalStorage(): any[] {
+  //   return JSON.parse(localStorage.getItem('cart') || '[]');
+  // }
+
   getCartFromLocalStorage(): any[] {
-    return JSON.parse(localStorage.getItem('cart') || '[]');
+    return JSON.parse(localStorage.getItem('cart') || '[]').map((item: any) => ({
+      ...item,
+      productId: item.productId // Ensure consistency here as well
+    }));
   }
+  
 
     clearCart(userId: number | null): Observable<any> | void {
     if (userId) {
@@ -98,16 +143,33 @@ export class CartService {
   
 
 
+// syncLocalCartToDatabase(userId: string, cartItems: any[]) {
+//   const itemsToSync = cartItems.map((item: any) => ({
+//     productId: item.id,
+//     quantity: item.quantity
+//   }));
+
+//   this.http.post(`${this.apiUrl}/add`, { userId ,items: itemsToSync }).subscribe(
+//     (response) => {
+//       console.log('Cart synced successfully');
+//       console.log();
+//       localStorage.removeItem('cart');
+//     },
+//     (error) => {
+//       console.error('Error syncing cart', error);
+//     }
+//   );
+// }
+
 syncLocalCartToDatabase(userId: string, cartItems: any[]) {
   const itemsToSync = cartItems.map((item: any) => ({
-    productId: item.id,
+    productId: item.productId,  // Use productId consistently
     quantity: item.quantity
   }));
 
-  this.http.post(`${this.apiUrl}/add`, { userId ,items: itemsToSync }).subscribe(
+  this.http.post(`${this.apiUrl}/add`, { userId, items: itemsToSync }).subscribe(
     (response) => {
       console.log('Cart synced successfully');
-      console.log();
       localStorage.removeItem('cart');
     },
     (error) => {
@@ -115,5 +177,6 @@ syncLocalCartToDatabase(userId: string, cartItems: any[]) {
     }
   );
 }
+
 }
 

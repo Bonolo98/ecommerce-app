@@ -16,6 +16,16 @@ export class OrderService {
     return this.http.post(`${this.apiUrl}/place`, orderData);
   }
 
+  // placeOrder(orderData: any): Observable<any> {
+  //   if (!orderData.cartItems || !Array.isArray(orderData.cartItems)) {
+  //     console.error("Invalid cartItems format", orderData);
+  //     return new Observable((observer) => observer.error("Invalid cart items"));
+  //   }
+  
+  //   return this.http.post(`${this.apiUrl}/place`, orderData);
+  // }
+  
+
   getOrdersByUser(userId: number): Observable<Order[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

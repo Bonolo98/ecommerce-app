@@ -39,6 +39,7 @@ export class ProductDetailsComponent implements OnInit {
 
     this.getUserId();
     const id = this.route.snapshot.paramMap.get('id');
+    console.log(id);
     if (id) {
       this.productService.getProductById(Number(id)).subscribe((data) => {
         this.product = data;
@@ -49,9 +50,22 @@ export class ProductDetailsComponent implements OnInit {
   getUserId() {
     this.userId = this.authService.getUserId() as number;
   }
-  
+
+  // addToCart(productId: number) {
+  //   if (this.userId) {
+  //     console.log(this.userId);
+  //     this.cartService.addToCart(this.userId, productId).subscribe(() => {
+  //       console.log('Product added to cart successfully');
+  //     });
+  //   } else {
+  //     this.cartService.addToCart(null, productId).subscribe(() => {
+  //       console.log('Product added to local cart');
+  //     });
+  //   }
+  // }
 
   addToCart(productId: number) {
+    console.log('Adding product with ID:', 'PPPPPPPPPPP', productId);  // Log productId here
     if (this.userId) {
       this.cartService.addToCart(this.userId, productId).subscribe(() => {
         console.log('Product added to cart successfully');
@@ -62,12 +76,11 @@ export class ProductDetailsComponent implements OnInit {
       });
     }
   }
+  
 
   toggleDescription() {
     this.showDescription = !this.showDescription;
   }
-
-
 
   fetchProductDetails(productId: number) {
     this.productService.getProductById(productId).subscribe(
@@ -89,7 +102,7 @@ export class ProductDetailsComponent implements OnInit {
 
   submitReview() {
     if (!this.userId) {
-      alert('Please Login')
+      alert('Please Login');
       this.router.navigate(['/login']);
       return;
     }
@@ -97,7 +110,7 @@ export class ProductDetailsComponent implements OnInit {
     const reviewData = {
       productId: this.product.id,
       rating: this.newReview.rating,
-      comment: this.newReview.comment
+      comment: this.newReview.comment,
     };
 
     this.reviewService.addReview(reviewData).subscribe(

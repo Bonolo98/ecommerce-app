@@ -32,6 +32,7 @@ export class CartComponent implements OnInit {
     this.setUserId();
     this.cartService.cart$.subscribe((cart) => {
       this.cartItems = cart;
+      console.log(this.cartItems)
       const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
       console.log(cartItems);
       this.calculateTotal();

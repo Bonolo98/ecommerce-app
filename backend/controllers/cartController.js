@@ -26,66 +26,41 @@ exports.getAllCartItems = async (req, res) => {
   }
 };
 
-// exports.addToCart = async (req, res) => {
-//   try {
-//     const { userId, productId, quantity } = req.body;
-
-//     // Check if product is already in the cart
-//     const existingItem = await pool.query(
-//       "SELECT * FROM cart WHERE user_id = $1 AND product_id = $2",
-//       [userId, productId]
-//     );
-
-//     if (existingItem.rows.length > 0) {
-//       // If exists, increase quantity
-//       await pool.query(
-//         "UPDATE cart SET quantity = quantity + 1 WHERE user_id = $1 AND product_id = $2",
-//         [userId, productId]
-//       );
-//     } else {
-//       // If not, insert new item with quantity = 1
-//       await pool.query(
-//         "INSERT INTO cart (user_id, product_id, quantity) VALUES ($1, $2, 1)",
-//         [userId, productId]
-//       );
-//     }
-
-//     // Respond with success (no cart data fetching)
-//     res.json({ success: true, message: "Item added to cart" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ success: false, message: "Server error" });
-//   }
-// };
-
-
 
 // exports.addToCart = async (req, res) => {
 //   try {
-//     const { userId, productId, quantity } = req.body;
+//     const { userId, items } = req.body;
 
-//     // Check if product is already in the cart
-//     const existingItem = await pool.query(
-//       "SELECT * FROM cart WHERE user_id = $1 AND product_id = $2",
-//       [userId, productId]
-//     );
+//     // Check if items are provided
+//     if (!items || items.length === 0) {
+//       return res.status(400).json({ success: false, message: "No items to sync" });
+//     } 
 
-//     if (existingItem.rows.length > 0) {
-//       // If the product exists, update the quantity for that product
-//       await pool.query(
-//         "UPDATE cart SET quantity = quantity + $1 WHERE user_id = $2 AND product_id = $3",
-//         [quantity, userId, productId]
+//     // Loop through the items array and process each item
+//     for (const item of items) {
+//       const { productId, quantity } = item;
+
+//       // Check if product is already in the cart
+//       const existingItem = await pool.query(
+//         "SELECT * FROM cart WHERE user_id = $1 AND product_id = $2",
+//         [userId, productId]
 //       );
-//     } else {
-//       // If the product doesn't exist in the cart, insert a new item
-//       await pool.query(
-//         "INSERT INTO cart (user_id, product_id, quantity) VALUES ($1, $2, $3)",
-//         [userId, productId, quantity]  // Make sure quantity is passed from the request body
-//       );
+
+//       if (existingItem.rows.length > 0) {
+//         await pool.query(
+//           "UPDATE cart SET quantity = quantity + $1 WHERE user_id = $2 AND product_id = $3",
+//           [quantity, userId, productId]
+//         );
+//       } else {
+
+//         await pool.query(
+//           "INSERT INTO cart (user_id, product_id, quantity) VALUES ($1, $2, $3)",
+//           [userId, productId, quantity]
+//         );
+//       }
 //     }
 
-//     // Respond with success
-//     res.json({ success: true, message: "Item added to cart" });
+//     res.json({ success: true, message: "Items synced to cart" });
 //   } catch (error) {
 //     console.error(error);
 //     res.status(500).json({ success: false, message: "Server error" });
@@ -94,18 +69,20 @@ exports.getAllCartItems = async (req, res) => {
 
 exports.addToCart = async (req, res) => {
   try {
-    const { userId, items } = req.body;
+    const { userId, items, productId } = req.body;
+    let itemsToProcess = items;
 
-    // Check if items are provided
-    if (!items || items.length === 0) {
+    if (!items && productId) {
+      itemsToProcess = [{ productId, quantity: 1 }];
+    }
+
+    if (!itemsToProcess || itemsToProcess.length === 0) {
       return res.status(400).json({ success: false, message: "No items to sync" });
     }
 
-    // Loop through the items array and process each item
-    for (const item of items) {
+    for (const item of itemsToProcess) {
       const { productId, quantity } = item;
 
-      // Check if product is already in the cart
       const existingItem = await pool.query(
         "SELECT * FROM cart WHERE user_id = $1 AND product_id = $2",
         [userId, productId]
@@ -117,7 +94,6 @@ exports.addToCart = async (req, res) => {
           [quantity, userId, productId]
         );
       } else {
-
         await pool.query(
           "INSERT INTO cart (user_id, product_id, quantity) VALUES ($1, $2, $3)",
           [userId, productId, quantity]
@@ -131,7 +107,6 @@ exports.addToCart = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
-
 
 
 exports.removeFromCart = async (req, res) => {

@@ -24,7 +24,7 @@
         {{ product.description || 'No description available.' }}
       </p>
 
-      <p class="available-stock">IN STOCK: </p>
+      <!-- <p class="available-stock">IN STOCK: </p> -->
       <p class="product-price">{{ product.price | currency: "R" }}</p>
 
       <button class="add-to-cart-btn" (click)="addToCart(product)">
@@ -36,17 +36,15 @@
       </button>
 
 
-      <!-- Reviews Section -->
+<!-- Reviews Section -->
 <div class="reviews-section">
-  <!-- <h2>Customer Reviews</h2> -->
-
   <div *ngFor="let review of reviews" class="review">
     <p><strong>{{ review.username }}</strong> - 
       <span class="stars">
         <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
           <i 
             class="fa-solid"
-            [ngClass]="review.rating > i ? 'fa-star filled' : 'fa-star'"
+            [ngClass]="review.rating >= (i + 1) ? 'fa-star filled' : 'fa-star'"
           ></i>
         </ng-container>
       </span>
@@ -55,24 +53,22 @@
     <p class="review-date">{{ review.created_at | date }}</p>
   </div>
   
-
   <!-- Add Review -->
   <div class="add-review">
     <h3>Add a Review</h3>
 
-<!-- Clickable Star Rating -->
-<div class="star-rating">
-  <i 
-    *ngFor="let star of [1,2,3,4,5]; let i = index" 
-    class="fa fa-star"
-    [ngClass]="{'filled': newReview.rating > i}"
-    (click)="setRating(i + 1)"
-  ></i>
-</div>
-
+    <!-- Clickable Star Rating -->
+    <div class="star-rating">
+      <i 
+        *ngFor="let star of [1,2,3,4,5]; let i = index" 
+        class="fa fa-star"
+        [ngClass]="{'filled': newReview.rating >= (i + 1)}"
+        (click)="setRating(i + 1)"
+      ></i>
+    </div>
 
     <textarea [(ngModel)]="newReview.comment" placeholder="Write your review here..."></textarea>
-    <button  (click)="submitReview()">Post Review</button>
+    <button (click)="submitReview()">Post Review</button>
   </div>
 </div>
 
