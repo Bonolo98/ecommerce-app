@@ -9,7 +9,7 @@ export interface CartItem {
   name: string;
   price: number;
   image: string;
-  productId: number;
+  product_id: number;
   quantity: number;
 }
 
@@ -32,9 +32,9 @@ export class CartComponent implements OnInit {
     this.setUserId();
     this.cartService.cart$.subscribe((cart) => {
       this.cartItems = cart;
-      console.log(this.cartItems)
+      console.log('CART: ',this.cartItems)
       const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
-      console.log(cartItems);
+      console.log('LOCAL STORAGE:', cartItems);
       this.calculateTotal();
     });
   

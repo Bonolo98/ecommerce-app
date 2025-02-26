@@ -18,6 +18,7 @@ export interface Order {
   shipping_address: string;
   status: string;
   cart_items: OrderItem[];
+  products: any[]
 }
 
 @Component({
@@ -29,7 +30,8 @@ export interface Order {
 export class OrdersComponent implements OnInit {
   orders: Order[] = [];
   userId: number | null = null;
-  expandedOrderId: number | null = null; // For toggling order details
+  expandedOrderId: number | null = null;
+  data: any;
 
   constructor(
     private orderService: OrderService,
@@ -39,7 +41,7 @@ export class OrdersComponent implements OnInit {
   ngOnInit() {
     this.setUserId();
     this.fetchOrders();
-    console.log(this.orders);
+    console.log(this.fetchOrders());
   }
 
   setUserId() {
@@ -51,12 +53,16 @@ export class OrdersComponent implements OnInit {
 
 
   fetchOrders() {
-    console.log('User ID before fetching orders:', this.userId); // 🔍 Check if userId is set
+    console.log('User ID before fetching orders:', this.userId);
     if (this.userId) {
       this.orderService.getOrdersByUser(this.userId).subscribe(
         (data: any) => {
-          console.log('Orders fetched from API:', data); // 🔍 See full API response
-          this.orders = data || []; // Ensure it assigns correctly
+          console.log('Orders fetched from API:', data);
+          if (data && Array.isArray(data)) {
+            this.orders = data;
+          } else {
+            this.orders = [];
+          }
         },
         (error) => {
           console.error('Error fetching orders:', error);
@@ -65,6 +71,7 @@ export class OrdersComponent implements OnInit {
       );
     }
   }
+  
 
 
   toggleOrderDetails(orderId: number) {

@@ -6,7 +6,7 @@ exports.getAllCartItems = async (req, res) => {
 
     // Fetch all cart items for the user
     const cartItems = await pool.query(
-      `SELECT c.id, c.quantity, p.name, p.price, p.image 
+      `SELECT c.id, c.product_id, c.quantity, p.name, p.price, p.image 
        FROM cart c 
        JOIN products p ON c.product_id = p.id 
        WHERE c.user_id = $1`,

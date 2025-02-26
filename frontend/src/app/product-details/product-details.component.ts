@@ -34,6 +34,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.productId)
     this.fetchProductDetails(this.productId);
     this.fetchReviews(this.productId);
 

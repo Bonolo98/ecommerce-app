@@ -1,38 +1,24 @@
 
-   <div class="orders-container">
-    <h2>My Orders</h2>
-  
-    <!-- Show message if there are no orders -->
-    <div *ngIf="orders.length === 0" class="empty-message">
-      <p>You have no orders yet.</p>
+   <div *ngFor="let order of orders" class="order-card">
+    <div class="order-header">
+      <h3>Order #{{ order.id }}</h3>
     </div>
   
-    <!-- Loop through orders -->
-    <div *ngFor="let order of orders" class="order-card">
-      <div class="order-header">
-        <h3>Order #{{ order.id }}</h3>
-        <!-- <span class="order-status" [ngClass]="getStatusClass(order.status)">
-          {{ order.status }}
-        </span> -->
-      </div>
+    <p><strong>Total:</strong> R{{ order.total_amount }}</p>
+    <p><strong>Shipping Address:</strong> {{ order.shipping_address }}</p>
   
-      <p><strong>Total:</strong> R{{ order.total_amount }}</p>
-      <p><strong>Shipping Address:</strong> {{ order.shipping_address }}</p>
+    <button (click)="toggleOrderDetails(order.id)" class="details-button">
+      {{ expandedOrderId === order.id ? 'Hide Details' : 'View Details' }}
+    </button>
   
-      <button (click)="toggleOrderDetails(order.id)" class="details-button">
-        {{ expandedOrderId === order.id ? 'Hide Details' : 'View Details' }}
-      </button>
-  
-      <!-- Order Items (Collapsible) -->
-      <div *ngIf="expandedOrderId === order.id" class="order-items">
-        <h4>Items:</h4>
-        <div *ngFor="let item of order.cart_items" class="order-item">
-          <img [src]="item.image || item.image_url" alt="{{ item.name }}" class="item-image" />
-          <div class="item-details">
-            <h5>{{ item.name }}</h5>
-            <p>Price: R{{ item.price }}</p>
-            <p>Quantity: {{ item.quantity }}</p>
-          </div>
+    <div *ngIf="expandedOrderId === order.id" class="order-items">
+      <h4>Items:</h4>
+      <div *ngFor="let item of order.products" class="order-item">
+        <img [src]="item.image || item.image_url" alt="{{ item.name }}" class="item-image" />
+        <div class="item-details">
+          <h5>{{ item.name }}</h5>
+          <p>Price: R{{ item.price }}</p>
+          <p>Quantity: {{ item.quantity }}</p>
         </div>
       </div>
     </div>
