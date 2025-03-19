@@ -3,7 +3,7 @@ const pool = require('../db');
 exports.addReview = async (req, res) => {
   try {
     const { productId, rating, comment } = req.body;
-    const userId = req.user.id; // Extracted from token
+    const userId = req.user.id;
 
     if (!productId || !rating || !comment) {
       return res.status(400).json({ success: false, message: 'All fields are required' });

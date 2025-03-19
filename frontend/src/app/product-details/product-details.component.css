@@ -140,6 +140,19 @@
   color: gold;
 }
 
+
+.reviewForm {
+  display:flex;
+  margin: auto;
+  justify-content: space-between;
+}
+
+.textArea {
+  max-width: 320px;
+  min-width:250px;
+  max-height: 50px;
+}
+
 /* Responsive Design */
 @media screen and (max-width: 1024px) {
   .product-card {

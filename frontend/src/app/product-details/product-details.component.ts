@@ -109,7 +109,8 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     const reviewData = {
-      productId: this.product.id,
+      userId: this.userId,
+      productId: this.productId,
       rating: this.newReview.rating,
       comment: this.newReview.comment,
     };

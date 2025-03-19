@@ -1,15 +1,15 @@
 <div class="container">
   <div *ngIf="product" class="product-card">
-    <img 
-      *ngIf="product.image" 
-      [src]="product.image" 
-      alt="{{ product.name }}" 
+    <img
+      *ngIf="product.image"
+      [src]="product.image"
+      alt="{{ product.name }}"
       class="product-image"
     />
-    <img 
-      *ngIf="!product.image" 
-      src="https://via.placeholder.com/600x400" 
-      alt="No Image Available" 
+    <img
+      *ngIf="!product.image"
+      src="https://via.placeholder.com/600x400"
+      alt="No Image Available"
       class="product-image"
     />
 
@@ -17,15 +17,15 @@
       <h1 class="product-title">{{ product.name }}</h1>
 
       <button (click)="toggleDescription()" class="toggle-btn">
-        {{ showDescription ? 'Hide Description' : 'Show Description' }}
+        {{ showDescription ? "Hide Description" : "Show Description" }}
       </button>
 
       <p *ngIf="showDescription" class="product-description">
-        {{ product.description || 'No description available.' }}
+        {{ product.description || "No description available." }}
       </p>
 
       <!-- <p class="available-stock">IN STOCK: </p> -->
-      <p class="product-price">{{ product.price | currency: "R" }}</p>
+      <p class="product-price">{{ product.price | currency : "R" }}</p>
 
       <button class="add-to-cart-btn" (click)="addToCart(product)">
         Add to Cart
@@ -35,44 +35,52 @@
         Go to Cart
       </button>
 
+      <!-- Reviews Section -->
+      <div class="reviews-section">
+        <div *ngFor="let review of reviews" class="review">
+          <p>
+            <strong>{{ review.username }}</strong> -
+            <span class="stars">
+              <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+                <i
+                  class="fa-solid"
+                  [ngClass]="
+                    review.rating >= i + 1 ? 'fa-star filled' : 'fa-star'
+                  "
+                ></i>
+              </ng-container>
+            </span>
+          </p>
+          <p>{{ review.comment }}</p>
+          <p class="review-date">{{ review.created_at | date }}</p>
+        </div>
 
-<!-- Reviews Section -->
-<div class="reviews-section">
-  <div *ngFor="let review of reviews" class="review">
-    <p><strong>{{ review.username }}</strong> - 
-      <span class="stars">
-        <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
-          <i 
-            class="fa-solid"
-            [ngClass]="review.rating >= (i + 1) ? 'fa-star filled' : 'fa-star'"
-          ></i>
-        </ng-container>
-      </span>
-    </p>
-    <p>{{ review.comment }}</p>
-    <p class="review-date">{{ review.created_at | date }}</p>
-  </div>
-  
-  <!-- Add Review -->
-  <div class="add-review">
-    <h3>Add a Review</h3>
+        <!-- Add Review -->
+        <div class="add-review">
+          <h3>Add a Review</h3>
 
-    <!-- Clickable Star Rating -->
-    <div class="star-rating">
-      <i 
-        *ngFor="let star of [1,2,3,4,5]; let i = index" 
-        class="fa fa-star"
-        [ngClass]="{'filled': newReview.rating >= (i + 1)}"
-        (click)="setRating(i + 1)"
-      ></i>
-    </div>
+          <!-- Clickable Star Rating -->
+          <div class="star-rating">
+            <i
+              *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+              class="fa fa-star"
+              [ngClass]="{ filled: newReview.rating >= i + 1 }"
+              (click)="setRating(i + 1)"
+            ></i>
+          </div>
 
-    <textarea [(ngModel)]="newReview.comment" placeholder="Write your review here..."></textarea>
-    <button (click)="submitReview()">Post Review</button>
-  </div>
-</div>
-
-
+          <div class="reviewForm">
+            <textarea
+              [(ngModel)]="newReview.comment"
+              placeholder="Write your review here..."
+              class="textArea"
+            ></textarea>
+            <button (click)="submitReview()" class="add-to-cart-btn">
+              Post Review
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

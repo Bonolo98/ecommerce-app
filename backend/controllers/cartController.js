@@ -1,4 +1,4 @@
-const pool = require("../db"); // Assuming you have a db connection file
+const pool = require("../db");
 
 exports.getAllCartItems = async (req, res) => {
   try {
@@ -25,47 +25,6 @@ exports.getAllCartItems = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
-
-
-// exports.addToCart = async (req, res) => {
-//   try {
-//     const { userId, items } = req.body;
-
-//     // Check if items are provided
-//     if (!items || items.length === 0) {
-//       return res.status(400).json({ success: false, message: "No items to sync" });
-//     } 
-
-//     // Loop through the items array and process each item
-//     for (const item of items) {
-//       const { productId, quantity } = item;
-
-//       // Check if product is already in the cart
-//       const existingItem = await pool.query(
-//         "SELECT * FROM cart WHERE user_id = $1 AND product_id = $2",
-//         [userId, productId]
-//       );
-
-//       if (existingItem.rows.length > 0) {
-//         await pool.query(
-//           "UPDATE cart SET quantity = quantity + $1 WHERE user_id = $2 AND product_id = $3",
-//           [quantity, userId, productId]
-//         );
-//       } else {
-
-//         await pool.query(
-//           "INSERT INTO cart (user_id, product_id, quantity) VALUES ($1, $2, $3)",
-//           [userId, productId, quantity]
-//         );
-//       }
-//     }
-
-//     res.json({ success: true, message: "Items synced to cart" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ success: false, message: "Server error" });
-//   }
-// };
 
 exports.addToCart = async (req, res) => {
   try {
@@ -107,7 +66,6 @@ exports.addToCart = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
-
 
 exports.removeFromCart = async (req, res) => {
   try {
