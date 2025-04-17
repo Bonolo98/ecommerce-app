@@ -1,7 +1,8 @@
 const pool = require("../db");
 
 exports.placeOrder = async (req, res) => {
-  const { userId, cartItems, totalAmount, shippingAddress, phoneNumber } = req.body;
+  const { userId, cartItems, totalAmount, shippingAddress, phoneNumber } =
+    req.body;
 
   const client = await pool.connect();
   try {
@@ -14,19 +15,25 @@ exports.placeOrder = async (req, res) => {
     );
     const orderId = orderResult.rows[0].id;
 
-    const productIds = cartItems.map(item => item.productId);
+    const productIds = cartItems.map((item) => item.productId);
     const { rows: existingProducts } = await client.query(
       `SELECT id FROM products WHERE id = ANY($1)`,
       [productIds]
     );
-    const existingProductIds = new Set(existingProducts.map(product => product.id));
+    const existingProductIds = new Set(
+      existingProducts.map((product) => product.id)
+    );
 
-    const invalidItems = cartItems.filter(item => !existingProductIds.has(item.productId));
+    const invalidItems = cartItems.filter(
+      (item) => !existingProductIds.has(item.productId)
+    );
 
     if (invalidItems.length > 0) {
       return res.status(400).json({
         success: false,
-        message: `Invalid product IDs found: ${invalidItems.map(item => item.productId).join(", ")}. Please remove them from your cart.`,
+        message: `Invalid product IDs found: ${invalidItems
+          .map((item) => item.productId)
+          .join(", ")}. Please remove them from your cart.`,
       });
     }
 
@@ -36,13 +43,19 @@ exports.placeOrder = async (req, res) => {
     `;
 
     for (const item of cartItems) {
-      await client.query(orderProductsQuery, [orderId, item.productId, item.quantity, item.price]);
+      await client.query(orderProductsQuery, [
+        orderId,
+        item.productId,
+        item.quantity,
+        item.price,
+      ]);
     }
 
     await client.query("COMMIT");
 
-    res.status(200).json({ success: true, message: "Order placed successfully!" });
-
+    res
+      .status(200)
+      .json({ success: true, message: "Order placed successfully!" });
   } catch (error) {
     await client.query("ROLLBACK");
     console.error("Order placement error:", error);
@@ -51,7 +64,6 @@ exports.placeOrder = async (req, res) => {
     client.release();
   }
 };
-
 
 exports.getOrders = async (req, res) => {
   const { userId } = req.params; // Get userId from request parameters
@@ -70,29 +82,32 @@ exports.getOrders = async (req, res) => {
     const orders = ordersResult.rows;
 
     if (orders.length === 0) {
-      return res.status(404).json({ success: false, message: "No orders found." });
+      return res
+        .status(404)
+        .json({ success: false, message: "No orders found." });
     }
 
     // Step 2: Fetch Products for Each Order
-    const orderIds = orders.map(order => order.id);
+    const orderIds = orders.map((order) => order.id);
     const orderProductsQuery = `
-      SELECT op.order_id, op.product_id, p.name, op.quantity, op.price
+      SELECT op.order_id, op.product_id, p.name, op.quantity, op.price, p.image
       FROM order_products op
       JOIN products p ON op.product_id = p.id
       WHERE op.order_id = ANY($1)
     `;
 
-    const orderProductsResult = await client.query(orderProductsQuery, [orderIds]);
+    const orderProductsResult = await client.query(orderProductsQuery, [
+      orderIds,
+    ]);
     const orderProducts = orderProductsResult.rows;
 
     // Step 3: Attach Products to Their Respective Orders
-    const ordersWithProducts = orders.map(order => ({
+    const ordersWithProducts = orders.map((order) => ({
       ...order,
-      products: orderProducts.filter(op => op.order_id === order.id),
+      products: orderProducts.filter((op) => op.order_id === order.id),
     }));
 
     res.status(200).json({ success: true, orders: ordersWithProducts });
-
   } catch (error) {
     console.error("Get Orders error:", error);
     res.status(500).json({ success: false, message: "Server error" });
@@ -100,4 +115,3 @@ exports.getOrders = async (req, res) => {
     client.release();
   }
 };
-

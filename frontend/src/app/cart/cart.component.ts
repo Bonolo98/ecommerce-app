@@ -22,6 +22,7 @@ export interface CartItem {
 })
 
 export class CartComponent implements OnInit {
+  cartCount = 0;
   cartItems: CartItem[] = [];
   userId: number | null = null;
   totalAmount: number = 0;
@@ -29,6 +30,12 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
+
+    this.cartService.cartCount$.subscribe((count) => {
+      this.cartCount = count;
+      console.log(this.cartCount);
+    })
+
     this.setUserId();
     this.cartService.cart$.subscribe((cart) => {
       this.cartItems = cart;

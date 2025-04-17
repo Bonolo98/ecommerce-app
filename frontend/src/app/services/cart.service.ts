@@ -10,69 +10,49 @@ import { CartItem } from '../cart/cart.component';
 export class CartService {
   private apiUrl = `${environment.apiUrl}/cart`;
 
-  // BehaviorSubject to store cart state
+  private cartItems = [] = [];
   private cartSubject = new BehaviorSubject<CartItem[]>([]);
+  private cartCount = new BehaviorSubject<number>(0);
+
+  cartCount$ = this.cartCount.asObservable();
   cart$ = this.cartSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
   getCart(userId: number): Observable<any> {
+    const cartItems = this.cartCount.next(this.cartItems.length)
+    console.log(cartItems);
+
     return this.http.get(`${this.apiUrl}/${userId}`);
   }
 
-  // addToCart(userId: number | null, product: any): Observable<any> {
-  //   console.log(userId);
-  //   const productId = product.id;
-  
-  //   if (userId) {
-  //     return this.http.post(`${this.apiUrl}/add`, {
-  //       userId,
-  //       items: [{ productId, quantity: 1 }]
-  //     });
-  //   } else {
-  //     let cart = this.getCartFromLocalStorage();
-  //     const existingItem = cart.find((item: any) => item.id === productId);
-  
-  //     if (existingItem) {
-  //       existingItem.quantity += 1;
-  //     } else {
-  //       cart.push({ id: productId, quantity: 1, name: product.name, price: product.price, image: product.image });
-  //     }
-  
-  //     this.saveCartToLocalStorage(cart);
-  //     this.cartSubject.next(cart);
-  //     return new Observable((observer) => {
-  //       observer.next();
-  //       observer.complete();
-  //     });
-  //   }
-  // }
-
   addToCart(userId: number | null, product: any): Observable<any> {
-    const productId = product.id;  // This is fine, but ensure consistency in the cart as well
+    const productId = product.id;
     console.log(productId);
-  
+
     if (userId) {
       return this.http.post(`${this.apiUrl}/add`, {
         userId,
-        items: [{ productId, quantity: 1 }]
+        items: [{ productId, quantity: 1 }],
       });
     } else {
       let cart = this.getCartFromLocalStorage();
-      const existingItem = cart.find((item: any) => item.productId === productId);  // Use productId for consistency
-  
+      const existingItem = cart.find(
+        (item: any) => item.productId === productId
+      );
+
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
         cart.push({
-          productId,  // Ensure this is productId to match backend
+          productId,
           quantity: 1,
           name: product.name,
           price: product.price,
-          image: product.image
+          image: product.image,
         });
       }
-  
+
       this.saveCartToLocalStorage(cart);
       this.cartSubject.next(cart);
       return new Observable((observer) => {
@@ -81,9 +61,6 @@ export class CartService {
       });
     }
   }
-  
-  
-  
 
   refreshCart(userId: number) {
     this.getCart(userId).subscribe(
@@ -99,24 +76,21 @@ export class CartService {
       }
     );
   }
-  
+
   saveCartToLocalStorage(cartItems: CartItem[]) {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }
 
-  // getCartFromLocalStorage(): any[] {
-  //   return JSON.parse(localStorage.getItem('cart') || '[]');
-  // }
-
   getCartFromLocalStorage(): any[] {
-    return JSON.parse(localStorage.getItem('cart') || '[]').map((item: any) => ({
-      ...item,
-      productId: item.productId // Ensure consistency here as well
-    }));
+    return JSON.parse(localStorage.getItem('cart') || '[]').map(
+      (item: any) => ({
+        ...item,
+        productId: item.productId,
+      })
+    );
   }
-  
 
-    clearCart(userId: number | null): Observable<any> | void {
+  clearCart(userId: number | null): Observable<any> | void {
     if (userId) {
       return this.http.post(`${this.apiUrl}/clear`, { userId });
     } else {
@@ -124,11 +98,14 @@ export class CartService {
     }
   }
 
-    clearLocalStorageCart() {
+  clearLocalStorageCart() {
     localStorage.removeItem('cart');
   }
 
-  removeFromCart(userId: number | null, productId: number): Observable<any> | void {
+  removeFromCart(
+    userId: number | null,
+    productId: number
+  ): Observable<any> | void {
     if (userId) {
       return this.http.delete(`${this.apiUrl}/${userId}`, {
         body: { productId },
@@ -140,43 +117,23 @@ export class CartService {
       return;
     }
   }
-  
 
+  syncLocalCartToDatabase(userId: string, cartItems: any[]) {
+    const itemsToSync = cartItems.map((item: any) => ({
+      productId: item.productId,
+      quantity: item.quantity,
+    }));
 
-// syncLocalCartToDatabase(userId: string, cartItems: any[]) {
-//   const itemsToSync = cartItems.map((item: any) => ({
-//     productId: item.id,
-//     quantity: item.quantity
-//   }));
-
-//   this.http.post(`${this.apiUrl}/add`, { userId ,items: itemsToSync }).subscribe(
-//     (response) => {
-//       console.log('Cart synced successfully');
-//       console.log();
-//       localStorage.removeItem('cart');
-//     },
-//     (error) => {
-//       console.error('Error syncing cart', error);
-//     }
-//   );
-// }
-
-syncLocalCartToDatabase(userId: string, cartItems: any[]) {
-  const itemsToSync = cartItems.map((item: any) => ({
-    productId: item.productId,  // Use productId consistently
-    quantity: item.quantity
-  }));
-
-  this.http.post(`${this.apiUrl}/add`, { userId, items: itemsToSync }).subscribe(
-    (response) => {
-      console.log('Cart synced successfully');
-      localStorage.removeItem('cart');
-    },
-    (error) => {
-      console.error('Error syncing cart', error);
-    }
-  );
+    this.http
+      .post(`${this.apiUrl}/add`, { userId, items: itemsToSync })
+      .subscribe(
+        (response) => {
+          console.log('Cart synced successfully');
+          localStorage.removeItem('cart');
+        },
+        (error) => {
+          console.error('Error syncing cart', error);
+        }
+      );
+  }
 }
-
-}
-

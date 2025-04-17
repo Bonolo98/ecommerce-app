@@ -7,6 +7,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const userRoutes = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
+const wishListRoutes = require("./routes/wishListRoutes");
 
 const { logger } = require("./middleware/logger");
 const cors = require('cors');
@@ -50,6 +51,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/search", productRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/wishlist", wishListRoutes);
 
 
 

@@ -2,9 +2,8 @@ const pool = require("../db");
 
 exports.getAllCartItems = async (req, res) => {
   try {
-    const { userId } = req.params; // Assuming the userId is passed as a parameter
+    const { userId } = req.params;
 
-    // Fetch all cart items for the user
     const cartItems = await pool.query(
       `SELECT c.id, c.product_id, c.quantity, p.name, p.price, p.image 
        FROM cart c 
