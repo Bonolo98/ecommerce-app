@@ -16,11 +16,13 @@ const app = express();
 app.use(bodyParser.json());
 app.use(logger);
 
-// app.use(cors({
-//     origin: '*',
-//     methods: 'GET, POST, PUT, DELETE',
-//     allowedHeaders: 'Content-Type, Authorization',
-//   }));
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET, POST, PUT, DELETE",
+    allowedHeaders: "Content-Type, Authorization",
+  }),
+);
 
 const allowedOrigins = [
   "http://localhost:4200",
