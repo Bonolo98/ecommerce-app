@@ -40,7 +40,7 @@ app.use(
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin) {
+      if (origin) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
