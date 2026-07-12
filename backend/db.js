@@ -12,7 +12,7 @@
 //   });
 // };
 
-// // Try connecting to port 5433 first, then fallback to 5432 if it fails
+// Try connecting to port 5433 first, then fallback to 5432 if it fails
 // (async () => {
 //   try {
 //     pool = createPool(5433);
@@ -20,19 +20,10 @@
 //     console.log("Connected to PostgreSQL on port 5433");
 //   } catch (error) {
 //     console.error("Failed to connect on port 5433, trying port 5432...");
-//     try {
-//       pool = createPool(5432);
-//       await pool.connect();
-//       console.log("Connected to PostgreSQL on port 5432");
-//     } catch (err) {
-//       console.error("Failed to connect on both ports 5433 and 5432", err);
-//       process.exit(1);
-//     }
 //   }
 // })();
 
 // module.exports = pool;
-
 
 const { Pool } = require("pg");
 
