@@ -16,19 +16,21 @@ const app = express();
 app.use(bodyParser.json());
 app.use(logger);
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:4200",
-      "https://ecommerce-9aaslz4fy-bonolos-projects-1c1373ab.vercel.app",
-      "https://ecommerce-app-bonolos-projects-1c1373ab.vercel.app",
-      "https://ecommerce-app-zp2y.onrender.com",
-    ],
-    methods: "GET, POST, PUT, DELETE",
-    credentials: true,
-    //allowedHeaders: "Content-Type, Authorization",
-  }),
-);
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:4200",
+//       "https://ecommerce-9aaslz4fy-bonolos-projects-1c1373ab.vercel.app",
+//       "https://ecommerce-app-bonolos-projects-1c1373ab.vercel.app",
+//       "https://ecommerce-app-zp2y.onrender.com",
+//     ],
+//     methods: "GET, POST, PUT, DELETE",
+//     credentials: true,
+//     allowedHeaders: "Content-Type, Authorization",
+//   }),
+// );
+
+app.use(cors({ origin: true, credentials: true }));
 
 // const allowedOrigins = [
 //   "http://localhost:4200",
