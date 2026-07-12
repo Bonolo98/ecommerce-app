@@ -18,8 +18,11 @@ export class RegisterComponent {
   phone = '';
   message = '';
   isLoading = false;
+  emailExists = false;
+  existingEmail = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+
+  constructor(private authService: AuthService, private router: Router) { }
 
   isFormValid(): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -45,20 +48,28 @@ export class RegisterComponent {
         phone: this.phone,
         role: this.role
       })
-      .subscribe(
-        (response) => {
-          if (response) {
-            alert('Successfully Registered! You can now log in.');
-            this.router.navigate(['/login']);
+        .subscribe(
+          (response) => {
+            if (response) {
+              alert('Successfully Registered! You can now log in.');
+              this.router.navigate(['/login']);
+            }
+            this.isLoading = false;
+          },
+          (error) => {
+            console.error('Registration error', error);
+
+            if (error.error.includes("duplicate key") || error.error.includes("violates unique constraint")) {
+              this.emailExists = true;
+              this.existingEmail = 'This email already exist';
+            } else {
+              this.message = 'Registration failed. Please try again.';
+
+            }
+
+            this.isLoading = false;
           }
-          this.isLoading = false;
-        },
-        (error) => {
-          console.error('Registration error', error);
-          this.message = 'Registration failed. Please try again.';
-          this.isLoading = false;
-        }
-      );
+        );
     } else {
       this.message = 'Please fill out all required fields correctly.';
       this.isLoading = false;

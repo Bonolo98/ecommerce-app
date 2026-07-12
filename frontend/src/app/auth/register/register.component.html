@@ -11,7 +11,10 @@
     minlength="3"
     #usernameInput="ngModel"
   />
-  <div *ngIf="usernameInput.invalid && usernameInput.touched" class="error-message">
+  <div
+    *ngIf="usernameInput.invalid && usernameInput.touched"
+    class="error-message"
+  >
     Username is required and must be at least 3 characters long.
   </div>
 
@@ -26,7 +29,10 @@
     minlength="6"
     #passwordInput="ngModel"
   />
-  <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-message">
+  <div
+    *ngIf="passwordInput.invalid && passwordInput.touched"
+    class="error-message"
+  >
     Password is required and must be at least 6 characters long.
   </div>
 
@@ -40,9 +46,13 @@
     required
     #emailInput="ngModel"
   />
-  <div *ngIf="email && !isFormValid() && emailInput.touched" class="error-message">
+  <div
+    *ngIf="email && !isFormValid() && emailInput.touched"
+    class="error-message"
+  >
     Please enter a valid email address.
   </div>
+  <p *ngIf="existingEmail" class="error-message">{{ existingEmail }}</p>
 
   <!-- Phone -->
   <input
@@ -53,8 +63,8 @@
     type="tel"
   />
 
-    <!-- Role -->
-    <input
+  <!-- Role -->
+  <input
     hidden
     class="input-field"
     [(ngModel)]="role"
@@ -63,10 +73,17 @@
     type="text"
   />
 
-  <button class="register-button" (click)="register()" [disabled]="!isFormValid()">Register</button>
+  <button
+    class="register-button"
+    (click)="register()"
+    [disabled]="!isFormValid()"
+  >
+    Register
+  </button>
 
   <p class="header-text">
-    Already have an account? <a routerLink="/login" style="color: #FF8966;">Login</a>
+    Already have an account?
+    <a routerLink="/login" style="color: #ff8966">Login</a>
   </p>
 
   <!-- Loading Spinner -->
