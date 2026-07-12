@@ -18,23 +18,29 @@ app.use(logger);
 
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "http://localhost:4200",
+      "https://ecommerce-9aaslz4fy-bonolos-projects-1c1373ab.vercel.app",
+      "https://ecommerce-app-bonolos-projects-1c1373ab.vercel.app",
+      "https://ecommerce-app-zp2y.onrender.com",
+    ],
     methods: "GET, POST, PUT, DELETE",
-    allowedHeaders: "Content-Type, Authorization",
+    credentials: true,
+    //allowedHeaders: "Content-Type, Authorization",
   }),
 );
 
-const allowedOrigins = [
-  "http://localhost:4200",
-  "https://ecommerce-9aaslz4fy-bonolos-projects-1c1373ab.vercel.app",
-  "https://ecommerce-app-bonolos-projects-1c1373ab.vercel.app",
-  "https://ecommerce-app-zp2y.onrender.com",
-];
+// const allowedOrigins = [
+//   "http://localhost:4200",
+//   "https://ecommerce-9aaslz4fy-bonolos-projects-1c1373ab.vercel.app",
+//   "https://ecommerce-app-bonolos-projects-1c1373ab.vercel.app",
+//   "https://ecommerce-app-zp2y.onrender.com",
+// ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
