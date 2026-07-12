@@ -11,7 +11,7 @@ interface CartItem {
   name: string;
   price: number;
   image: string;
-  product_id:number;
+  product_id: number;
   quantity: number;
 }
 
@@ -46,7 +46,7 @@ export class CheckoutComponent implements OnInit {
     private orderService: OrderService,
     private authService: AuthService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.setUserId();
@@ -96,7 +96,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   placeOrder() {
-    
+
     if (!this.userId) {
       alert('Please log in to proceed with checkout.');
       this.router.navigate(['/login']);
@@ -108,7 +108,7 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
-    this.savePaymentDetails(); 
+    this.savePaymentDetails();
 
     const orderData = {
       userId: this.userId,
@@ -130,7 +130,7 @@ export class CheckoutComponent implements OnInit {
         console.log('Invalid productId found:', item);
       }
     });
-    
+
 
     this.orderService.placeOrder(orderData).subscribe(
       () => {
@@ -144,26 +144,6 @@ export class CheckoutComponent implements OnInit {
       }
     );
   }
-
-  // placeOrder() {
-  //   if (!this.userId || !this.email) {
-  //     alert('Please log in to proceed.');
-  //     this.router.navigate(['/login']);
-  //     return;
-  //   }
-
-  //   this.paystackService.payWithPaystack(
-  //     this.email,
-  //     this.totalAmount,
-  //     (response) => {
-  //       console.log('Payment successful:', response);
-  //       this.saveOrder(response.reference);
-  //     },
-  //     () => {
-  //       console.log('Payment window closed');
-  //     }
-  //   );
-  // }
 
   saveOrder(transactionRef: string) {
     const orderData = {
