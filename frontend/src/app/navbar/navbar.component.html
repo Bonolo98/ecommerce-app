@@ -1,38 +1,54 @@
 <nav class="navbar">
-  <div class="navbar-content">
+  <div class="navbar-content primary-background">
     <a routerLink="/" class="logo">CompuTech</a>
 
-    <!-- Search Bar (Hidden on Mobile) -->
     <div class="search-container">
       <input
         type="text"
         placeholder="Search products..."
         [(ngModel)]="searchQuery"
         (keyup.enter)="onSearchChange()"
-        (input)="searchQuery === '' && onSearchChange()" 
+        (input)="searchQuery === '' && onSearchChange()"
         class="search-input"
       />
       <a (click)="onSearchChange()" class="search-btn">
-        <img width="24" height="24" src="https://img.icons8.com/forma-bold/24/FFFFFF/search.png" alt="search"/>
+        <img
+          width="24"
+          height="24"
+          src="https://img.icons8.com/forma-bold/24/FFFFFF/search.png"
+          alt="search"
+        />
       </a>
     </div>
 
-    <!-- Hamburger Icon (Hidden on Large Screens) -->
     <span class="menu-icon" (click)="toggleMenu()">☰</span>
 
-    <!-- Navigation Links -->
     <div class="nav-links" [class.active]="menuOpen">
       <a routerLink="/orders" *ngIf="username" class="login-text">Orders</a>
       <a routerLink="/wishlist" class="wishlist-link">
-        <img width="30" height="30" src="https://img.icons8.com/forma-regular/96/FFFFFF/like.png" alt="like"/>
+        <img
+          width="30"
+          height="30"
+          src="https://img.icons8.com/forma-regular/96/FFFFFF/like.png"
+          alt="like"
+        />
       </a>
       <a routerLink="/cart" class="cart-link">
-        <img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/FFFFFF/shopping-cart--v1.png" alt="shopping-cart"/>
+        <img
+          width="30"
+          height="30"
+          src="https://img.icons8.com/ios-glyphs/30/FFFFFF/shopping-cart--v1.png"
+          alt="shopping-cart"
+        />
       </a>
 
       <span class="login-text" *ngIf="username">{{ username }}</span>
       <span class="login-text" *ngIf="username" (click)="logout()">LOGOUT</span>
-      <span class="login-text" *ngIf="!username" routerLink="/login">LOGIN</span>
+      <button>
+        <span class="login-text" *ngIf="!username" routerLink="/login"
+          >Login</span
+        >
+      </button>
     </div>
   </div>
 </nav>

@@ -10,15 +10,22 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 import { routes } from './app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: Aura
+      }
+    }),
     provideRouter(routes),
     provideHttpClient(),
-    provideAnimations(),
     importProvidersFrom(
       MatToolbarModule,
       MatIconModule,
@@ -27,6 +34,6 @@ export const appConfig: ApplicationConfig = {
       MatButtonModule,
       MatMenuModule
     ),
-    importProvidersFrom(MatCardModule, MatButtonModule, MatIconModule) // Import Material Modules
+    importProvidersFrom(MatCardModule, MatButtonModule, MatIconModule),
   ]
 };

@@ -1,0 +1,7 @@
+:root{
+    --primary-theme-color: darkgrey,
+}
+
+.primary-background {
+    background:var(--primary-theme-color);
+}

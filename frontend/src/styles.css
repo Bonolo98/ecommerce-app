@@ -1,11 +1,10 @@
-@import '@angular/cdk/overlay-prebuilt.css';
-
-/* You can add global styles to this file, and also import other style files */
-/* @import "tailwindcss"; */
-
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+/* @import '@angular/cdk/overlay-prebuilt.css'; */
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap'); */
+/* @import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.min.css";*/
+@import "tailwindcss";
+@import "primeicons/primeicons.css";
+@import "./_colors.css";
 
 
 :root {
@@ -56,14 +55,14 @@ color-scheme: light;
 color-scheme: dark;
 }
 
-@layer base {
+/* @layer base {
 * {
 @apply border-border;
 }
-}
+} */
 
 
-:root .styles.css {
+/* :root .styles.css {
 --background: 0 0% 100%;
 --foreground: 20 14.3% 4.1%;
 --muted: 60 4.8% 95.9%;
@@ -108,13 +107,13 @@ color-scheme: light;
 --destructive-foreground: 60 9.1% 97.8%;
 --ring: 24 5.7% 82.9%;
 color-scheme: dark;
-}
+} */
 
 
-@layer base {
+/* @layer base {
 * {
 @apply border-border;
 }
-}
+} */
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

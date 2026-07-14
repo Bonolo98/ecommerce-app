@@ -1,17 +1,22 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { SearchService } from '../services/search.service';
+
+
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+
+
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
@@ -22,6 +27,7 @@ export class NavbarComponent {
   username: string = '';
   isLoggedIn: boolean = false;
 
+
   authService = inject(AuthService);
   searchService = inject(SearchService);
 
@@ -29,7 +35,7 @@ export class NavbarComponent {
 
   ngOnInit() {
     this.updateUserInfo();
-    
+
     this.authService.isLoggedIn$.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
       this.updateUserInfo();

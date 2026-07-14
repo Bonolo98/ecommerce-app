@@ -31,10 +31,9 @@
   top: 0;
   align-items: center;
   justify-content: space-between;
-  background-color: #E5446D;
+  background-color: black;
   padding: 10px 20px 10px 20px; 
   position: fixed; 
-  background-color: #E5446D;
 }
 
 .navbar-content {
@@ -68,20 +67,20 @@
 
 .search-input {
   width: 300px;
-  padding: 8px;
+  padding: 8px 12px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 20px;
   transition: width 0.3s ease;
+  background-color: white;
 }
 
 .search-btn {
-  background-color: #FF8966;
+  /* background-color: white; */
   padding: 6px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px;
-  margin-left: 5px;
+  font-size: 12px;
 }
 
 /* Navigation Links */
