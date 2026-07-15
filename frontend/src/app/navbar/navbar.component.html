@@ -1,17 +1,19 @@
-<nav class="navbar">
-  <div class="navbar-content primary-background">
-    <a routerLink="/" class="logo">CompuTech</a>
+<nav class="fixed top-0 w-screen h-16 bg-black flex items-center justify-between px-5 py-2.5 z-[1000]">
+  <div class="flex w-full md:w-[90vw] items-center justify-between px-0 md:px-[50px] mx-auto">
+    <a routerLink="/" class="text-white text-xl md:text-[22px] font-bold no-underline">
+      CompuTech
+    </a>
 
-    <div class="search-container">
+    <div class="hidden md:flex items-center flex-grow justify-center">
       <input
         type="text"
         placeholder="Search products..."
         [(ngModel)]="searchQuery"
         (keyup.enter)="onSearchChange()"
         (input)="searchQuery === '' && onSearchChange()"
-        class="search-input"
+        class="w-[300px] px-3 py-2 border border-gray-300 rounded-full bg-white transition-[width] duration-300 ease-in-out"
       />
-      <a (click)="onSearchChange()" class="search-btn">
+      <a (click)="onSearchChange()" class="px-2.5 py-1.5 rounded cursor-pointer text-xs">
         <img
           width="24"
           height="24"
@@ -21,11 +23,18 @@
       </a>
     </div>
 
-    <span class="menu-icon" (click)="toggleMenu()">☰</span>
+    <span class="md:hidden text-2xl text-white cursor-pointer p-2.5" (click)="toggleMenu()">
+      ☰
+    </span>
 
-    <div class="nav-links" [class.active]="menuOpen">
-      <a routerLink="/orders" *ngIf="username" class="login-text">Orders</a>
-      <a routerLink="/wishlist" class="wishlist-link">
+    <div
+      class="flex items-center gap-4 max-md:hidden max-md:absolute max-md:top-[60px] max-md:right-0 max-md:w-[200px] max-md:bg-[#E5446D] max-md:flex-col max-md:p-2.5 max-md:shadow-[0px_4px_8px_rgba(0,0,0,0.2)] max-md:rounded-md max-md:[&>a]:block max-md:[&>a]:p-2.5 max-md:[&>a]:text-center"
+      [class.active]="menuOpen"
+      [class.max-md:flex]="menuOpen"
+    >
+      <a routerLink="/orders" *ngIf="username" class="text-white font-bold">Orders</a>
+
+      <a routerLink="/wishlist">
         <img
           width="30"
           height="30"
@@ -33,7 +42,8 @@
           alt="like"
         />
       </a>
-      <a routerLink="/cart" class="cart-link">
+
+      <a routerLink="/cart">
         <img
           width="30"
           height="30"
@@ -42,12 +52,15 @@
         />
       </a>
 
-      <span class="login-text" *ngIf="username">{{ username }}</span>
-      <span class="login-text" *ngIf="username" (click)="logout()">LOGOUT</span>
+      <span class="text-white font-bold" *ngIf="username">{{ username }}</span>
+      <span class="text-white font-bold cursor-pointer" *ngIf="username" (click)="logout()">
+        LOGOUT
+      </span>
+
       <button>
-        <span class="login-text" *ngIf="!username" routerLink="/login"
-          >Login</span
-        >
+        <span class="text-white font-bold" *ngIf="!username" routerLink="/login">
+          Login
+        </span>
       </button>
     </div>
   </div>

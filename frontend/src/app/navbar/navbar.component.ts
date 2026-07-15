@@ -15,11 +15,8 @@ import { SearchService } from '../services/search.service';
     ReactiveFormsModule,
     RouterModule,
     FormsModule,
-
-
   ],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
   searchQuery: string = '';

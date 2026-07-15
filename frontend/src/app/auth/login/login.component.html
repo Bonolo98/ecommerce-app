@@ -1,14 +1,47 @@
-<div class="login-container">
-  <a routerLink="/" class="logo">CompuTech</a>
-  <input class="input-field" [(ngModel)]="username" placeholder="Username" />
-  <input class="input-field" [(ngModel)]="password" type="password" placeholder="Password" />
-  <button class="login-button" (click)="login()" [disabled]="isLoading">Login</button>
-  <p class="header-text">Don't have an account? <a routerLink="/register" style="color: #FF8966;">Register</a></p>
+<div
+  class="max-w-[350px] sm:max-w-[350px] lg:max-w-[400px] mx-auto mt-[100px] sm:mt-[130px] lg:mt-[150px] mb-5 p-[15px] sm:p-[18px] lg:p-5 bg-white text-center rounded-lg flex flex-col justify-center items-center"
+>
+  <a
+    routerLink="/"
+    class="text-lg sm:text-xl lg:text-[22px] font-bold text-[#FF8966] no-underline mb-5 sm:mb-6 lg:mb-[30px]"
+  >
+    CompuTech
+  </a>
+
+  <input
+    class="w-full px-2.5 py-2.5 sm:px-2.5 sm:py-2.5 lg:px-3 lg:py-3 mb-3 sm:mb-[15px] border border-gray-300 rounded text-sm sm:text-[15px] lg:text-base"
+    [(ngModel)]="username"
+    placeholder="Username"
+  />
+
+  <input
+    class="w-full px-2.5 py-2.5 sm:px-2.5 sm:py-2.5 lg:px-3 lg:py-3 mb-3 sm:mb-[15px] border border-gray-300 rounded text-sm sm:text-[15px] lg:text-base"
+    [(ngModel)]="password"
+    type="password"
+    placeholder="Password"
+  />
+
+  <button
+    class="w-full bg-stone-700 hover:bg-stone-900 text-white px-2.5 py-3 sm:px-2.5 sm:py-[13px] lg:px-3.5 lg:py-3.5 border-none rounded text-sm sm:text-[15px] lg:text-base cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+    (click)="login()"
+    [disabled]="isLoading"
+  >
+    Login
+  </button>
+
+  <p class="text-sm mt-4">
+    Don't have an account?
+    <a routerLink="/register" class="text-stone-500">Register</a>
+  </p>
 
   <!-- Loading Spinner -->
-  <div *ngIf="isLoading" class="spinner-container">
-    <div class="spinner"></div>
+  <div *ngIf="isLoading" class="flex justify-center items-center mt-5">
+    <div
+      class="w-10 h-10 rounded-full border-4 border-white/30 border-t-4 border-t-black animate-spin"
+    ></div>
   </div>
 
-  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <p *ngIf="errorMessage" class="text-red-600 mt-2.5 text-sm text-center">
+    {{ errorMessage }}
+  </p>
 </div>
