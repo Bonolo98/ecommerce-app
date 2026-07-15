@@ -1,6 +1,13 @@
-<nav class="fixed top-0 w-screen h-16 bg-stone-700 flex items-center justify-between px-5 py-2.5 z-[1000]">
-  <div class="flex w-full md:w-[90vw] items-center justify-between px-0 md:px-[50px] mx-auto">
-    <a routerLink="/" class="text-white text-xl md:text-[22px] font-bold no-underline">
+<nav
+  class="fixed top-0 w-screen h-16 bg-stone-700 flex items-center justify-between px-5 py-2.5 z-[1000]"
+>
+  <div
+    class="flex w-full md:w-[90vw] items-center justify-between px-0 md:px-[50px] mx-auto"
+  >
+    <a
+      routerLink="/"
+      class="text-white text-xl md:text-[22px] font-bold no-underline"
+    >
       CompuTech
     </a>
 
@@ -13,7 +20,10 @@
         (input)="searchQuery === '' && onSearchChange()"
         class="w-[300px] px-3 py-2 border border-gray-300 rounded-full bg-white transition-[width] duration-300 ease-in-out"
       />
-      <a (click)="onSearchChange()" class="px-2.5 py-1.5 rounded cursor-pointer text-xs">
+      <a
+        (click)="onSearchChange()"
+        class="px-2.5 py-1.5 rounded cursor-pointer text-xs"
+      >
         <img
           width="24"
           height="24"
@@ -23,16 +33,36 @@
       </a>
     </div>
 
-    <span class="md:hidden text-2xl text-white cursor-pointer p-2.5" (click)="toggleMenu()">
+    <button
+      class="md:hidden text-2xl text-white cursor-pointer p-2.5"
+      (click)="toggleMenu()"
+    >
       ☰
-    </span>
+    </button>
+
+    <div
+      class="rounded-md border border-gray-200 bg-white p-1 shadow-md grid min-w-40 absolute right-0 mt-90 md:hidden"
+      *ngIf="menuOpen"
+    >
+      <a class="hover:bg-stone-200 p-4" href="" *ngIf="username">{{
+        username
+      }}</a>
+      <a class="hover:bg-stone-200 p-4" href="" routerLink="/wishlist"
+        >Wishlist</a
+      >
+      <a class="hover:bg-stone-200 p-4" href="" routerLink="/orders">Orders</a>
+      <a class="hover:bg-stone-200 p-4" href="" routerLink="/cart">Cart</a>
+      <a class="hover:bg-stone-200 p-4 font-bold" href="">Logout</a>
+    </div>
 
     <div
       class="flex items-center gap-4 max-md:hidden max-md:absolute max-md:top-[60px] max-md:right-0 max-md:w-[200px] max-md:bg-[#E5446D] max-md:flex-col max-md:p-2.5 max-md:shadow-[0px_4px_8px_rgba(0,0,0,0.2)] max-md:rounded-md max-md:[&>a]:block max-md:[&>a]:p-2.5 max-md:[&>a]:text-center"
       [class.active]="menuOpen"
       [class.max-md:flex]="menuOpen"
     >
-      <a routerLink="/orders" *ngIf="username" class="text-white font-bold">Orders</a>
+      <a routerLink="/orders" *ngIf="username" class="text-white font-bold"
+        >Orders</a
+      >
 
       <a routerLink="/wishlist">
         <img
@@ -53,12 +83,20 @@
       </a>
 
       <span class="text-white font-bold" *ngIf="username">{{ username }}</span>
-      <span class="text-white font-bold cursor-pointer" *ngIf="username" (click)="logout()">
+      <span
+        class="text-white font-bold cursor-pointer"
+        *ngIf="username"
+        (click)="logout()"
+      >
         LOGOUT
       </span>
 
       <button>
-        <span class="text-white font-bold" *ngIf="!username" routerLink="/login">
+        <span
+          class="text-white font-bold"
+          *ngIf="!username"
+          routerLink="/login"
+        >
           Login
         </span>
       </button>

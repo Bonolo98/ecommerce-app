@@ -23,6 +23,7 @@ export class NavbarComponent {
   menuOpen: boolean = false;
   username: string = '';
   isLoggedIn: boolean = false;
+  
 
 
   authService = inject(AuthService);
@@ -50,6 +51,7 @@ export class NavbarComponent {
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+    
   }
 
   logout() {
