@@ -20,7 +20,8 @@ export class ProductDetailsComponent implements OnInit {
   userId!: number;
   showDescription: boolean = false;
   reviews: any[] = [];
-  newReview = { rating: 0, comment: '' };
+  // newReview = { rating: 0, comment: '' };
+  newReview = { comment: '' };
 
   constructor(
     private route: ActivatedRoute,
@@ -77,7 +78,7 @@ export class ProductDetailsComponent implements OnInit {
       });
     }
   }
-  
+
 
   toggleDescription() {
     this.showDescription = !this.showDescription;
@@ -111,14 +112,15 @@ export class ProductDetailsComponent implements OnInit {
     const reviewData = {
       userId: this.userId,
       productId: this.productId,
-      rating: this.newReview.rating,
+      // rating: this.newReview.rating,
       comment: this.newReview.comment,
     };
 
     this.reviewService.addReview(reviewData).subscribe(
       (response) => {
         console.log('Review added:', response);
-        this.newReview = { rating: 0, comment: '' };
+        this.newReview = { comment: '' };
+        // this.newReview = { rating: 0, comment: '' };
         this.fetchReviews(this.product.id);
       },
       (error) => {
@@ -131,7 +133,7 @@ export class ProductDetailsComponent implements OnInit {
     );
   }
 
-  setRating(star: number) {
-    this.newReview.rating = star;
-  }
+  // setRating(star: number) {
+  //   this.newReview.rating = star;
+  // }
 }
